@@ -1,0 +1,7 @@
+{
+  "name": "package",
+  "version": "0.0.0",
+  "dependencies": {
+    "topcoat": "~0.8.0"
+  }
+}
