@@ -3,3 +3,4 @@ node_modules
 resources/node-webkit
 build
 bower_components
+dist

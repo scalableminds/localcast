@@ -33,13 +33,13 @@ module.exports = function (grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      files: '<%= config.app %>/js/*.js'
+      files: '<%= config.build %>/js/*.js'
     },
     copy: {
       appLinux: {
         files: [{
           expand: true,
-          cwd: '<%= config.app %>',
+          cwd: '<%= config.build %>',
           dest: '<%= config.dist %>/app.nw',
           src: '**'
         }]
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
       appMacos: {
         files: [{
           expand: true,
-          cwd: '<%= config.app %>',
+          cwd: '<%= config.build %>',
           dest: '<%= config.dist %>/node-webkit.app/Contents/Resources/app.nw',
           src: '**'
         }, {
@@ -173,6 +173,11 @@ module.exports = function (grunt) {
           base: '<%= config.build %>'
         }
       }
+    },
+    shell: {
+        bower: {
+            command: "bower install"
+        }
     }
   });
 
@@ -252,17 +257,17 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('dist-linux', [
-    'build',
     'jshint',
     'clean:dist',
+    'build',
     'copy:appLinux',
     'createLinuxApp'
   ]);
 
   grunt.registerTask('dist-win', [
-    'build',
     'jshint',
     'clean:dist',
+    'build',
     'copy:copyWinToTmp',
     'compress:appToTmp',
     'rename:zipToApp',
@@ -271,9 +276,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dist-mac', [
-    'build',
     'jshint',
     'clean:dist',
+    'build',
     'copy:webkit',
     'copy:appMacos',
     'rename:app',
@@ -304,6 +309,6 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask("default", ["build", "connect", "watch"])
-  grunt.registerTask("build", ["coffee", "less:sources", "copy:copyAssets"])
+  grunt.registerTask("build", ["shell:bower", "coffee", "less:sources", "copy:copyAssets"])
 
 }
