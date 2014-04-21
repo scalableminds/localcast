@@ -3,19 +3,17 @@
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  
-    "homepage": "https://github.com/hotzenklotz/localcast",
-    "bugs": "https://github.com/hotzenklotz/localcast/issues",
-    "author": {
-      "name": "Tom Herold",
-      "email": "tom.herold@scalableminds.com",
-      "url": "https://github.com/hotzenklotz"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git://github.com/hotzenklotz/localcast.git"
-    },
-  
+  "homepage": "https://github.com/hotzenklotz/localcast",
+  "bugs": "https://github.com/hotzenklotz/localcast/issues",
+  "author": {
+    "name": "Tom Herold",
+    "email": "tom.herold@scalableminds.com",
+    "url": "https://github.com/hotzenklotz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hotzenklotz/localcast.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "matchdep": "~0.1.2",
@@ -25,7 +23,11 @@
     "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-clean": "~0.4.1",
     "grunt-contrib-rename": "0.0.3",
-    "grunt-contrib-compress": "~0.5.3"
+    "grunt-contrib-compress": "~0.5.3",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-less": "~0.11.0"
   },
   "engines": {
     "node": ">=0.8.0"

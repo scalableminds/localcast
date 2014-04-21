@@ -1,6 +1,6 @@
 {
   "name": "localcast",
-  "main": "views/index.html",
+  "main": "index.html",
   "version": "0.0.1",
   "single-instance": true,
   "window": {
@@ -9,7 +9,7 @@
     "height": 650,
     "min_width": 650,
     "min_height": 650,
-    "toolbar": false
+    "toolbar": true
   },
   "chromium-args": "--child-clean-exit"
 }

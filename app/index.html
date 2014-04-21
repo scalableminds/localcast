@@ -1,11 +1,51 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
     <title>localcast</title>
     <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
-<body>
-	<h1>localcast</h1>
-	<p>Cast your local media to the big screen</p>
+<body class="container">
+
+    <section class="playlist">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Test</td>
+            <td>1h:43m</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="player-controls">
+      <div class="flexbox flex-horizontal">
+        <div class="block button-controls">
+          <button class="btn btn-default previous">
+            <span class=" fa fa-backward fa-lg"></span>
+          </button>
+          <button class="btn btn-default play">
+            <span class=" fa fa-play fa-2x"></span>
+          </button>
+          <button class="btn btn-default next">
+            <span class=" fa fa-forward fa-lg"></span>
+          </button>
+        </div>
+        <div class="flexbox flex-horizontal progress-controls">
+          <span class="current-time">00:00</span>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+            <div class="progress-handle"></div>
+          </div>
+          <span class="total-time">05:00</span>
+        </div>
+      </div>
+    </section>
+
 </body>
 </html>

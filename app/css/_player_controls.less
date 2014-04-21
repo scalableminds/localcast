@@ -1,0 +1,71 @@
+@import "_mixins.less";
+
+@controlsHeight: 60px;
+@handleHeight: 16px;
+@progressHeight: 10px;
+
+.player-controls {
+
+  position: fixed;
+  bottom: 5px;
+
+  display: block;
+  width: 100%;
+
+  .button-controls {
+    min-width: 180px;
+    height: @controlsHeight;
+    flex: 0.1;
+
+    .btn {
+      outline: none;
+    }
+
+    .previous {
+      .roundButton(@controlsHeight - 10px);
+      text-align: left;
+    }
+
+    .play {
+      .roundButton(@controlsHeight);
+    }
+
+    .next {
+      .roundButton(@controlsHeight - 10px);
+      text-align: right;
+    }
+  }
+
+  .progress-controls {
+    flex: 0.9;
+    height: @controlsHeight;
+    padding-right: 50px;
+
+
+    .progress {
+      flex: 0.8;
+      display: inline-block;
+      position: relative;
+      width: 100%;
+      height: @progressHeight;
+      margin: 0 0;
+      overflow: visible;
+    }
+
+    .progress-handle {
+      .roundButton(@handleHeight);
+      border: 1px solid black;
+      background-color: white;
+      position: absolute;
+      left: 60%;
+      margin-left: -@handleHeight / 2;
+      margin-top: -(@handleHeight - @progressHeight) / 2;
+    }
+
+    .current-time, .total-time {
+      flex: 0.1;
+      text-align: center;
+    }
+
+  }
+}

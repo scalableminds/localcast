@@ -9,6 +9,7 @@ module.exports = function (grunt) {
   // configurable paths
   var config = {
     app: 'app',
+    build: 'build',
     dist: 'dist',
     tmp: 'tmp',
     resources: 'resources'
@@ -22,7 +23,8 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '<%= config.dist %>/*',
-            '<%= config.tmp %>/*'
+            '<%= config.tmp %>/*',
+            '<%= config.build %>/*'
           ]
         }]
       }
@@ -77,6 +79,14 @@ module.exports = function (grunt) {
           dest: '<%= config.tmp %>/',
           src: '**'
         }]
+      },
+      copyAssets: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.build %>',
+          src: ['**', '!**/*.less', '!**/*.coffee']
+        }]
       }
     },
     compress: {
@@ -113,6 +123,55 @@ module.exports = function (grunt) {
           src: '<%= config.tmp %>/app.zip',
           dest: '<%= config.tmp %>/app.nw'
         }]
+      }
+    },
+
+    watch: {
+      options: {
+        livereload: true
+      },
+      coffee: {
+        files: '<%= config.app %>/js/**/*.js',
+        tasks: ["coffee:development"]
+      },
+      less: {
+        files: '<%= config.app %>/css/**/*.less',
+        tasks: ["less"]
+      },
+      html: {
+        files:  '<%= config.app %>/**/*.html',
+        tasks: ["copy:copyAssets"]
+      }
+    },
+    coffee: {
+      development: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/js',
+          src: ['**/*.coffee'],
+          dest: '<%= config.build %>/js',
+          ext: ".js"
+        }]
+      }
+    },
+    less: {
+        sources : {
+          files: [{
+            expand: true,
+            cwd: '<%= config.app %>/css',
+            src: ['**/*.less'],
+            dest: '<%= config.build %>/css',
+            ext: ".css"
+          }]
+        }
+    },
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          livereload: true,
+          base: '<%= config.build %>'
+        }
       }
     }
   });
@@ -193,6 +252,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('dist-linux', [
+    'build',
     'jshint',
     'clean:dist',
     'copy:appLinux',
@@ -200,6 +260,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dist-win', [
+    'build',
     'jshint',
     'clean:dist',
     'copy:copyWinToTmp',
@@ -210,6 +271,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dist-mac', [
+    'build',
     'jshint',
     'clean:dist',
     'copy:webkit',
@@ -241,4 +303,7 @@ module.exports = function (grunt) {
     });
   });
 
-};
+  grunt.registerTask("default", ["build", "connect", "watch"])
+  grunt.registerTask("build", ["coffee", "less:sources", "copy:copyAssets"])
+
+}

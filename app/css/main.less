@@ -1,2 +1,38 @@
-@import "/bower_components/topcoat/css/topcoat-desktop-light.css";
+@import "/bower_components/bootstrap/dist/css/bootstrap.css";
+@import "/bower_components/font-awesome/css/font-awesome.css";
 
+@import "_mixins.less";
+@import "_playlist.less";
+@import "_player_controls.less";
+
+.flexbox {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+
+}
+
+.container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 50px 50px 0 50px;
+}
+
+.block {
+  display: block;
+}
+
+.flex-vertical {
+  flex-direction: column;
+}
+
+.flex-horizontal {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex(@value) {
+  flex: @value;
+}
