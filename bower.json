@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "dependencies": {
     "bootstrap": "~3.1.1",
-    "font-awesome": "~4.0.3"
+    "font-awesome": "~4.0.3",
+    "marionette": "~1.8.2",
+    "requirejs": "~2.1.11",
+    "jquery": "~2.1.0",
+    "lodash": "~2.4.1"
   }
 }
