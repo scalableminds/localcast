@@ -6,11 +6,10 @@
 
 .player-controls {
 
-  position: fixed;
-  bottom: 5px;
+  border-top: 1px solid #444;
+  margin: 0 -15px;
+  padding: 5px 10px;
 
-  display: block;
-  width: 100%;
 
   .button-controls {
     min-width: 180px;
@@ -37,12 +36,12 @@
   }
 
   .progress-controls {
-    flex: 0.9;
+    flex: 0.85;
     height: @controlsHeight;
-    padding-right: 50px;
 
 
     .progress {
+      cursor: pointer;
       flex: 0.8;
       display: inline-block;
       position: relative;
@@ -66,6 +65,24 @@
       flex: 0.1;
       text-align: center;
     }
+  }
 
+  .shuffle-cast {
+    flex: 0.05;
+    text-align: center;
+    white-space: nowrap;
+
+    span {
+      cursor: pointer;
+
+      &:first-child {
+      margin-right: 10px;
+      }
+    }
+
+    .disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
   }
 }

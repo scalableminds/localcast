@@ -7,8 +7,8 @@
     "title": "localcast",
     "width": 650,
     "height": 650,
-    "min_width": 650,
-    "min_height": 650,
+    "min_width": 890,
+    "min_height": 240,
     "toolbar": true
   },
   "chromium-args": "--child-clean-exit"
