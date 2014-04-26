@@ -1,6 +1,6 @@
 require [
   "app"
-  "main_layouter"
+  "views/main_layouter"
 ], (app, MainLayouter) ->
 
   new MainLayouter(el : document.body)

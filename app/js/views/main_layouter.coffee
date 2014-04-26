@@ -1,10 +1,15 @@
 define [
-  "backbone.marionette"
-], (Marionette) ->
+  "backbone.marionette",
+  "./playlist_view",
+  "models/playlist_collection"
+], (Marionette, PlaylistView, PlaylistCollection) ->
 
-  class MainLayouter extends Backbone.Marionette.ItemView
+  class MainLayouter extends Backbone.Marionette.Layout
 
     ui :
+      "sectionDragDrop" : ".drag-drop"
+
+    regions :
       "sectionPlaylist" : ".playlist"
       "sectionDragDrop" : ".drag-drop"
 
@@ -27,8 +32,16 @@ define [
 
       evt.preventDefault()
 
-      for file in evt.originalEvent.dataTransfer.files
-        console.log file
+      files = evt.originalEvent.dataTransfer.files
+      @$(".drag-drop").hide()
+
+      playlistCollection = new PlaylistCollection(
+        _.map(files, (file) -> return file),
+        validate : true
+      )
+      playlistView = new PlaylistView(collection : playlistCollection)
+
+      @sectionPlaylist.show(playlistView)
 
 
     fileHover : ->
