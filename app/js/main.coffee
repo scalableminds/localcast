@@ -1,6 +1,8 @@
 require [
-  "app"
+  "jquery",
+  "app",
   "views/main_layouter"
-], (app, MainLayouter) ->
+], ($, app, MainLayouter) ->
 
-  new MainLayouter(el : document.body)
+  mainLayouter = new MainLayouter()
+  $("body").html(mainLayouter.render().el)

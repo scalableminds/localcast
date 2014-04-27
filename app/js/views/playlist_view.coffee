@@ -19,4 +19,5 @@ define [
 
     itemView : PlaylistItemView
     itemViewContainer : "tbody"
+    className : "playlist full-height"
 
