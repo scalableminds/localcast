@@ -2,7 +2,7 @@ define [
   "backbone"
 ], (Backbone) ->
 
-  class PlaylistModel extends Backbone.Model
+  class MediaFileModel extends Backbone.Model
 
     MEDIA_WHITELIST : [
       "image/jpeg",
@@ -13,6 +13,7 @@ define [
 
     defaults :
       duration : 0
+      isActive : false
 
     validate : (file, options) ->
 

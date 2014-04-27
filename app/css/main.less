@@ -1,6 +1,7 @@
 @import "/bower_components/bootstrap/dist/css/bootstrap.css";
 @import "/bower_components/font-awesome/css/font-awesome.css";
 
+@import "_variables.less";
 @import "_mixins.less";
 @import "_playlist.less";
 @import "_player_controls.less";
@@ -14,6 +15,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  padding: 0 @containerPadding;
 }
 
 .block {
@@ -39,9 +41,10 @@
 }
 
 .navbar-bottom {
-  min-height: 71px;
+  min-height: @navbarHeight;
 }
 
 .content-container {
   overflow-y: auto;
+  height: calc(100% ~"-" @navbarHeight);
 }

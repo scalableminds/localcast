@@ -1,9 +1,9 @@
 define [
   "backbone"
-  "./playlist_model"
-], (Backbone, PlaylistModel) ->
+  "./media_file_model"
+], (Backbone, MediaFileModel) ->
 
   class PlaylistCollection extends Backbone.Collection
 
-    model : PlaylistModel
+    model : MediaFileModel
 

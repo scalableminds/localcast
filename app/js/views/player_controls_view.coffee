@@ -71,6 +71,8 @@ define [
       @ui.progressBar.width(offsetX)
       @ui.progressHandle.css("left", offsetX)
 
+      app.vent.trigger("controls:seek", offsetX)
+
 
 
 

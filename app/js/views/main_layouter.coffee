@@ -9,7 +9,7 @@ define [
   class MainLayouter extends Backbone.Marionette.Layout
 
     template : _.template("""
-      <section class="content-container full-height"></section>
+      <section class="content-container"></section>
       <section class="navbar-bottom"></section>
     """)
 

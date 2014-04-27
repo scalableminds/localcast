@@ -1,7 +1,8 @@
 define [
-  "backbone.marionette"
+  "backbone.marionette",
+  "app",
   "./playlist_item_view"
-], (Marionette, PlaylistItemView) ->
+], (Marionette, app, PlaylistItemView) ->
 
   class PlaylistView extends Backbone.Marionette.CompositeView
 
@@ -20,4 +21,33 @@ define [
     itemView : PlaylistItemView
     itemViewContainer : "tbody"
     className : "playlist full-height"
+
+    initialize : ->
+
+      @activeTrack = 0
+
+      @listenTo(app.vent, "controls:next", @nextTrack)
+      @listenTo(app.vent, "controls:previous", @previousTrack)
+      @listenTo(app.vent, "controls:play", @playTrack)
+
+
+    nextTrack : ->
+
+      if @collection.length > 0 and @activeTrack < @collection.length - 1
+        @activeTrack++
+        @playTrack()
+
+
+    previousTrack : ->
+
+      if @collection.length > 0 and @activeTrack > 0
+        @activeTrack--
+        @playTrack()
+
+
+    playTrack : ->
+
+      if track = @collection.at(@activeTrack)
+        app.vent.trigger("playlist:playTrack", track)
+
 
