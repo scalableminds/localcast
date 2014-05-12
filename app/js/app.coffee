@@ -1,6 +1,5 @@
-define [
-  "backbone.marionette"
-], (Marionette) ->
+Marionette = require("backbone.marionette")
 
-  window.app = app = new Backbone.Marionette.Application()
-  return app
+app = new Marionette.Application()
+
+module.exports app

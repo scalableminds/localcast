@@ -1,53 +1,50 @@
-define [
-  "backbone.marionette",
-  "app",
-  "./playlist_item_view"
-], (Marionette, app, PlaylistItemView) ->
+app = require("../app.js")
+Backbone.Marionette = reuqire("backbone.marionette")
+PlaylistItemView = require("./playlist_item_view")
 
-  class PlaylistView extends Backbone.Marionette.CompositeView
+module.exports = class PlaylistView extends Backbone.Marionette.CompositeView
 
-    template : _.template("""
-       <table class="table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    """)
+  template : _.template("""
+     <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  """)
 
-    itemView : PlaylistItemView
-    itemViewContainer : "tbody"
-    className : "playlist full-height"
+  itemView : PlaylistItemView
+  itemViewContainer : "tbody"
+  className : "playlist full-height"
 
-    initialize : ->
+  initialize : ->
 
-      @activeTrack = 0
+    @activeTrack = 0
 
-      @listenTo(app.vent, "controls:next", @nextTrack)
-      @listenTo(app.vent, "controls:previous", @previousTrack)
-      @listenTo(app.vent, "controls:play", @playTrack)
+    @listenTo(app.vent, "controls:next", @nextTrack)
+    @listenTo(app.vent, "controls:previous", @previousTrack)
+    @listenTo(app.vent, "controls:play", @playTrack)
 
 
-    nextTrack : ->
+  nextTrack : ->
 
-      if @collection.length > 0 and @activeTrack < @collection.length - 1
-        @activeTrack++
-        @playTrack()
-
-
-    previousTrack : ->
-
-      if @collection.length > 0 and @activeTrack > 0
-        @activeTrack--
-        @playTrack()
+    if @collection.length > 0 and @activeTrack < @collection.length - 1
+      @activeTrack++
+      @playTrack()
 
 
-    playTrack : ->
+  previousTrack : ->
 
-      if track = @collection.at(@activeTrack)
-        app.vent.trigger("playlist:playTrack", track)
+    if @collection.length > 0 and @activeTrack > 0
+      @activeTrack--
+      @playTrack()
 
+
+  playTrack : ->
+
+    if track = @collection.at(@activeTrack)
+      app.vent.trigger("playlist:playTrack", track)
 

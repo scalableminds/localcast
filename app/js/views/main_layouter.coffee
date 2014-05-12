@@ -1,60 +1,58 @@
-define [
-  "backbone.marionette",
-  "./playlist_view",
-  "./player_controls_view",
-  "./drag_drop_view",
-  "models/playlist_collection"
-], (Marionette, PlaylistView, PlayerControlsView, DragDropView, PlaylistCollection) ->
+Marionette = require("backbone.marionette")
+PlaylistView = require("./playlist_view")
+PlayerControlsView = require("./player_controls_view")
+DragDropView = require("./drag_drop_view")
+PlaylistCollection = require("models/playlist_collection")
 
-  class MainLayouter extends Backbone.Marionette.Layout
+module.exports = class MainLayouter extends Backbone.Marionette.Layout
 
-    template : _.template("""
-      <section class="content-container"></section>
-      <section class="navbar-bottom"></section>
-    """)
+  template : _.template("""
+    <section class="content-container"></section>
+    <section class="navbar-bottom"></section>
+  """)
 
-    className : "container vbox"
-    tagName : "body"
+  className : "container vbox"
+  tagName : "body"
 
-    regions :
-      "sectionContent" : ".content-container"
-      "sectionControls" : ".navbar-bottom"
+  regions :
+    "sectionContent" : ".content-container"
+    "sectionControls" : ".navbar-bottom"
 
-    events :
-      "drop" : "fileDrop"
+  events :
+    "drop" : "fileDrop"
 
 
-    initialize : ->
+  initialize : ->
 
-      # prevent default behavior from changing page on dropped file
-      window.ondrop = (evt) -> evt.preventDefault(); return false
-      window.ondragover = (evt) -> evt.preventDefault(); return false
+    # prevent default behavior from changing page on dropped file
+    window.ondrop = (evt) -> evt.preventDefault(); return false
+    window.ondragover = (evt) -> evt.preventDefault(); return false
 
-      @playerControlsView = new PlayerControlsView()
-      @dragDropView = new DragDropView()
+    @playerControlsView = new PlayerControlsView()
+    @dragDropView = new DragDropView()
 
-      @listenTo(@, "render", @showRegions)
-
-
-    showRegions : ->
-
-      @sectionContent.show(@dragDropView)
-      @sectionControls.show(@playerControlsView)
+    @listenTo(@, "render", @showRegions)
 
 
-    fileDrop : (evt) ->
+  showRegions : ->
 
-      evt.preventDefault()
+    @sectionContent.show(@dragDropView)
+    @sectionControls.show(@playerControlsView)
 
-      files = evt.originalEvent.dataTransfer.files
 
-      playlistCollection = new PlaylistCollection(
-        _.map(files, (file) -> return file),
-        validate : true
-      )
-      playlistView = new PlaylistView(collection : playlistCollection)
+  fileDrop : (evt) ->
 
-      @sectionContent.show(playlistView)
+    evt.preventDefault()
+
+    files = evt.originalEvent.dataTransfer.files
+
+    playlistCollection = new PlaylistCollection(
+      _.map(files, (file) -> return file),
+      validate : true
+    )
+    playlistView = new PlaylistView(collection : playlistCollection)
+
+    @sectionContent.show(playlistView)
 
 
 

@@ -1,8 +1,13 @@
-require [
-  "jquery",
-  "app",
-  "views/main_layouter"
-], ($, app, MainLayouter) ->
+global.document = window.document
+global.$ = require("jquery")
+global.jQuery = require("jquery")
+global.Backbone = require("backbone")
 
-  mainLayouter = new MainLayouter()
-  $("body").html(mainLayouter.render().el)
+console.log(Backbone.$)
+
+$ = require("jquery")
+MainLayouter = require("./js/views/main_layouter.js")
+
+
+mainLayouter = new MainLayouter()
+$("body").html(mainLayouter.render().el)

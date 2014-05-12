@@ -1,35 +1,35 @@
-define [
-  "backbone.marionette",
-], (Marionette) ->
+Marionette = require("backbone.marionette")
 
-  class DragDropView extends Backbone.Marionette.ItemView
+module.exports = class DragDropView extends Backbone.Marionette.ItemView
 
-    template : _.template("""
-      <div>
-        <span class="fa fa-4x fa-copy"></span>
-        <p>Drag and Drop some media files to start</p>
-      </div>
-    """)
+  template : _.template("""
+    <div>
+      <span class="fa fa-4x fa-copy"></span>
+      <p>Drag and Drop some media files to start</p>
+    </div>
+  """)
 
-    className : "drag-drop hbox flex-center full-height"
+  className : "drag-drop hbox flex-center full-height"
 
 
-    initialize : ->
+  initialize : ->
 
-      $(window).on(
-        dragover : _.bind(@fileHover, @)
-        dragend : _.bind(@fileDragEnd, @)
-      )
-
-
-    fileHover : ->
-
-      @$el.addClass("hover")
+    $(window).on(
+      dragover : _.bind(@fileHover, @)
+      dragend : _.bind(@fileDragEnd, @)
+    )
 
 
-    fileDragEnd : ->
+  fileHover : ->
 
-      @$el.removeClass("hover")
+    @$el.addClass("hover")
 
 
-    onClose : ->
+  fileDragEnd : ->
+
+    @$el.removeClass("hover")
+
+
+  onClose : ->
+
+    # remove drag & drop handlers
