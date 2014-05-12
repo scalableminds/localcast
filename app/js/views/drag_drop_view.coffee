@@ -1,6 +1,8 @@
 Marionette = require("backbone.marionette")
+_ = require("lodash")
+$ = require("jquery")
 
-module.exports = class DragDropView extends Backbone.Marionette.ItemView
+module.exports = class DragDropView extends Marionette.ItemView
 
   template : _.template("""
     <div>
@@ -15,8 +17,8 @@ module.exports = class DragDropView extends Backbone.Marionette.ItemView
   initialize : ->
 
     $(window).on(
-      dragover : _.bind(@fileHover, @)
-      dragend : _.bind(@fileDragEnd, @)
+      dragover : @fileHover.bind(@)
+      dragend :  @fileDragEnd.bind(@)
     )
 
 

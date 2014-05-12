@@ -1,8 +1,9 @@
 app = require("../app.js")
-Backbone.Marionette = reuqire("backbone.marionette")
+Marionette = require("backbone.marionette")
 PlaylistItemView = require("./playlist_item_view")
+_ = require("lodash")
 
-module.exports = class PlaylistView extends Backbone.Marionette.CompositeView
+module.exports = class PlaylistView extends Marionette.CompositeView
 
   template : _.template("""
      <table class="table">

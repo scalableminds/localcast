@@ -1,13 +1,14 @@
 global.document = window.document
-global.$ = require("jquery")
-global.jQuery = require("jquery")
-global.Backbone = require("backbone")
+# window._ = global._ = require("lodash")._
+# window.$ = global.$ = require("jquery")
+# window.jQuery = global.jQuery = require("jquery")
+require('backbone').$ = require("jquery")
+# require('backbone.marionette').Backbone.$ = require("jquery")
 
-console.log(Backbone.$)
 
 $ = require("jquery")
 MainLayouter = require("./js/views/main_layouter.js")
 
-
+$ ->
 mainLayouter = new MainLayouter()
-$("body").html(mainLayouter.render().el)
+document.body.appendChild(mainLayouter.render().el)

@@ -1,9 +1,7 @@
-define [
-  "backbone"
-  "./media_file_model"
-], (Backbone, MediaFileModel) ->
+Backbone = require("backbone")
+MediaFileModel = require("./media_file_model")
 
-  class PlaylistCollection extends Backbone.Collection
+module.exports = class PlaylistCollection extends Backbone.Collection
 
     model : MediaFileModel
 

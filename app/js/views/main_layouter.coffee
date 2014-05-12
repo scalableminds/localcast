@@ -1,10 +1,11 @@
 Marionette = require("backbone.marionette")
+_ = require("lodash")
 PlaylistView = require("./playlist_view")
 PlayerControlsView = require("./player_controls_view")
 DragDropView = require("./drag_drop_view")
-PlaylistCollection = require("models/playlist_collection")
+PlaylistCollection = require("../models/playlist_collection")
 
-module.exports = class MainLayouter extends Backbone.Marionette.Layout
+module.exports = class MainLayouter extends Marionette.Layout
 
   template : _.template("""
     <section class="content-container"></section>
@@ -12,7 +13,7 @@ module.exports = class MainLayouter extends Backbone.Marionette.Layout
   """)
 
   className : "container vbox"
-  tagName : "body"
+  # tagName : "body"
 
   regions :
     "sectionContent" : ".content-container"
@@ -23,6 +24,7 @@ module.exports = class MainLayouter extends Backbone.Marionette.Layout
 
 
   initialize : ->
+
 
     # prevent default behavior from changing page on dropped file
     window.ondrop = (evt) -> evt.preventDefault(); return false

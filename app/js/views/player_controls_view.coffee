@@ -1,7 +1,8 @@
 Marionette = require("backbone.marionette")
-app = require("./js/app.js")
+app = require("../app.js")
+_ = require("lodash")
 
-module.exports = class PlayerControlsView extends Backbone.Marionette.ItemView
+module.exports = class PlayerControlsView extends Marionette.ItemView
 
   template : _.template("""
     <div class="button-controls">

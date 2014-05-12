@@ -1,7 +1,8 @@
-_ = require("underscore")
-Backbone.Marionette = reuqire("backbone.marionette")
+_ = require("lodash")
+app = require("../app")
+Marionette = require("backbone.marionette")
 
-module.exports = class PlaylistView extends Backbone.Marionette.ItemView
+module.exports = class PlaylistView extends Marionette.ItemView
 
   tagName: "<tr>"
   template : _.template("""

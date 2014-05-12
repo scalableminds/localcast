@@ -1,8 +1,6 @@
-define [
-  "backbone"
-], (Backbone) ->
+Backbone = require("backbone")
 
-  class MediaFileModel extends Backbone.Model
+module.exports = class MediaFileModel extends Backbone.Model
 
     MEDIA_WHITELIST : [
       "image/jpeg",
