@@ -1,13 +1,17 @@
 nodecastor = require("nodecastor")
-app = require("./app")
 Backbone = require("backbone")
+_ = require("lodash")
+app = require("./app")
+server = require("./server")
 
-module.exports = class Chromecast extends Backbone.Events
+module.exports = class Chromecast
 
   DEFAULT_MEDIA_RECEIVER : "CC1AD845"
   MEDIA_NAMESPACE : "urn:x-cast:com.google.cast.media"
 
   constructor : ->
+
+    _.extend(@, Backbone.Events)
 
     nodecastor
       .scan()
@@ -19,7 +23,7 @@ module.exports = class Chromecast extends Backbone.Events
       )
       .start()
 
-    @listenTo(app, "playlist:playTrack", @playMedia)
+    @listenTo(app.vent, "playlist:playTrack", @playMedia)
     @isAppRunning = false
 
 
@@ -44,7 +48,6 @@ module.exports = class Chromecast extends Backbone.Events
 
       device.application(@DEFAULT_MEDIA_RECEIVER, (err, app) =>
         if (!err)
-          console.log("Default Media Receiver", app)
 
           if @isAppRunning
             app.join(@MEDIA_NAMESPACE, @requestSession)
@@ -54,7 +57,7 @@ module.exports = class Chromecast extends Backbone.Events
       )
     )
 
-  requestSession : (err, session) ->
+  requestSession : (err, session) =>
 
       if(!err)
         @session = session
@@ -65,16 +68,18 @@ module.exports = class Chromecast extends Backbone.Events
     if @session
 
       mediaInfo =
-        contentId : file.getServerUrl(),
+        contentId : "#{server.getServerUrl()}#{file.get('path')}",
         streamType : file.get("streamType"),
         contentType : file.get("type")
+
+      console.log("playing: ", mediaInfo)
 
       loadRequest =
         requestId : 123,
         type : "LOAD",
         media : mediaInfo
 
-      session.send(loadRequest, (err, message) =>
+      @session.send(loadRequest, (err, message) =>
         if (err)
           console.error("Unable to cast:", err.message)
           @device.stop()

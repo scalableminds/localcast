@@ -1,4 +1,4 @@
-Backbone = require("backbone")
+Backbone = require("Backbone")
 
 module.exports = class MediaFileModel extends Backbone.Model
 
@@ -26,3 +26,8 @@ module.exports = class MediaFileModel extends Backbone.Model
           @set("streamType", "NONE")
         when"video"
           @set("streamType", "BUFFERED")
+
+
+
+
+

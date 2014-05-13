@@ -21,7 +21,9 @@
     "lodash": "~2.4.1",
     "jquery": "~2.1.0",
     "bootstrap": "0.0.2",
-    "nodecastor": "~0.1.4"
+    "nodecastor": "~0.1.4",
+    "ecstatic": "~0.5.3",
+    "ip": "~0.3.0"
   },
   "devDependencies": {
     "matchdep": "~0.1.2",
