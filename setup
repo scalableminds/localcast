@@ -1,0 +1,6 @@
+#!/bin/bash
+
+patch node_modules/nodecastor/node_modules/protobufjs/ProtoBuf.js < util/patch_protobuf.patch
+
+cd node_modules/nodecastor/node_modules/mdns2
+nw-gyp rebuild --target=0.8.6
