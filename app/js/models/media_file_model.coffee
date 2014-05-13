@@ -21,6 +21,8 @@ module.exports = class MediaFileModel extends Backbone.Model
 
     initialize : (file) ->
 
-      console.log "sfdsf"
-
-
+      switch file.type.split("/")[0]
+        when"image"
+          @set("streamType", "NONE")
+        when"video"
+          @set("streamType", "BUFFERED")

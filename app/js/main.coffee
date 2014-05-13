@@ -1,14 +1,9 @@
 global.document = window.document
-# window._ = global._ = require("lodash")._
-# window.$ = global.$ = require("jquery")
-# window.jQuery = global.jQuery = require("jquery")
-require('backbone').$ = require("jquery")
-# require('backbone.marionette').Backbone.$ = require("jquery")
-
-
-$ = require("jquery")
+Chromecast = require("./js/chromecast.js")
 MainLayouter = require("./js/views/main_layouter.js")
+require('backbone').$ = require("jquery")
 
-$ ->
+
+chromecast = new Chromecast()
 mainLayouter = new MainLayouter()
 document.body.appendChild(mainLayouter.render().el)
