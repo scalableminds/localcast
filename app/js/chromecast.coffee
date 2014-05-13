@@ -1,6 +1,6 @@
 nodecastor = require("nodecastor")
-app = require("app")
-Backone = require("backbone")
+app = require("./app")
+Backbone = require("backbone")
 
 module.exports = class Chromecast extends Backbone.Events
 
@@ -11,7 +11,7 @@ module.exports = class Chromecast extends Backbone.Events
 
     nodecastor
       .scan()
-      .on("online", (device) ->
+      .on("online", (device) =>
         @connect(device)
       )
       .on("offline", (device) ->
@@ -25,7 +25,7 @@ module.exports = class Chromecast extends Backbone.Events
 
   connect : (device) ->
 
-    device.on("connect", ->
+    device.on("connect", =>
 
       @device = device
 
@@ -42,7 +42,7 @@ module.exports = class Chromecast extends Backbone.Events
         console.error("An error occurred with some Chromecast device", err)
       )
 
-      device.application(DEFAULT_MEDIA_RECEIVER, (err, app) ->
+      device.application(@DEFAULT_MEDIA_RECEIVER, (err, app) =>
         if (!err)
           console.log("Default Media Receiver", app)
 
@@ -74,7 +74,7 @@ module.exports = class Chromecast extends Backbone.Events
         type : "LOAD",
         media : mediaInfo
 
-      session.send(loadRequest, (err, message) ->
+      session.send(loadRequest, (err, message) =>
         if (err)
           console.error("Unable to cast:", err.message)
           @device.stop()
