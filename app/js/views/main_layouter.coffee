@@ -1,5 +1,5 @@
-Marionette = require("backbone.marionette")
 _ = require("lodash")
+Marionette = require("backbone.marionette")
 PlaylistView = require("./playlist_view")
 PlayerControlsView = require("./player_controls_view")
 DragDropView = require("./drag_drop_view")
@@ -33,6 +33,9 @@ module.exports = class MainLayouter extends Marionette.Layout
     @playerControlsView = new PlayerControlsView()
     @dragDropView = new DragDropView()
 
+    @playlistCollection = new PlaylistCollection()
+    @playlistView = new PlaylistView(collection : @playlistCollection)
+
     @listenTo(@, "render", @showRegions)
 
 
@@ -42,19 +45,20 @@ module.exports = class MainLayouter extends Marionette.Layout
     @sectionControls.show(@playerControlsView)
 
 
-  fileDrop : (evt) ->
+  fileDrop : (evt) =>
 
     evt.preventDefault()
 
     files = evt.originalEvent.dataTransfer.files
 
-    playlistCollection = new PlaylistCollection(
-      _.map(files, (file) -> return file),
-      validate : true
+    _.map(files, (file) =>
+      @playlistCollection.add(
+        file,
+        validate : true
+      )
     )
-    playlistView = new PlaylistView(collection : playlistCollection)
 
-    @sectionContent.show(playlistView)
+    @sectionContent.show(@playlistView)
 
 
 

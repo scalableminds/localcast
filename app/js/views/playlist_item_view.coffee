@@ -15,6 +15,9 @@ module.exports = class PlaylistView extends Marionette.ItemView
     <td><%= duration %></td>
   """)
 
+  events :
+    "dblclick" : "playTrack"
+
   className : ->
 
     if @model.get("isActive")
@@ -23,7 +26,9 @@ module.exports = class PlaylistView extends Marionette.ItemView
       return ""
 
 
-  initialize : ->
+  initialize : (options) ->
+
+    {@parent} = options
 
     @listenTo(app.vent, "playlist:playTrack", @update)
     @listenTo(@, "render", @afterRender)
@@ -41,6 +46,11 @@ module.exports = class PlaylistView extends Marionette.ItemView
       @model.set("isActive", @model == newTrack)
       if @model.get("isActive")
         @render()
+
+
+  playTrack : ->
+
+    @parent.playTrack(@model)
 
 
   afterRender : ->

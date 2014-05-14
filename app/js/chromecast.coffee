@@ -65,24 +65,61 @@ module.exports = class Chromecast
 
   playMedia : (file) ->
 
+    @mediaSessionId = 1234
+
+    mediaInfo =
+      contentId : "#{server.getServerUrl()}#{file.get('path')}",
+      streamType : file.get("streamType"),
+      contentType : file.get("type")
+
+    request =
+      type : "LOAD",
+      media : mediaInfo
+
+    @sendCommand(request)
+
+
+  seek : (time) ->
+
+    request =
+      type : "SEEK",
+      currentTime : time
+
+    @sendCommand(request)
+
+
+  play : ->
+
+    request =
+      type : "PLAY",
+
+    @sendCommand(request)
+
+
+  pause : ->
+
+    request =
+      type : "PAUSE",
+
+    @sendCommand(request)
+
+
+  sendCommand : (request) ->
+
     if @session
 
-      mediaInfo =
-        contentId : "#{server.getServerUrl()}#{file.get('path')}",
-        streamType : file.get("streamType"),
-        contentType : file.get("type")
-
-      console.log("playing: ", mediaInfo)
-
-      loadRequest =
+      request = _.extend(request,
+        mediaSessionId : @medmediaSessionId
         requestId : 123,
-        type : "LOAD",
-        media : mediaInfo
+      )
 
-      @session.send(loadRequest, (err, message) =>
+      @session.send(request, (err, message) =>
         if (err)
           console.error("Unable to cast:", err.message)
           @device.stop()
+
+        if message
+          console.log(message)
       )
 
 

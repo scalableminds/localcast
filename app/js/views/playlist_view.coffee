@@ -17,9 +17,12 @@ module.exports = class PlaylistView extends Marionette.CompositeView
     </table>
   """)
 
+  className : "playlist full-height"
   itemView : PlaylistItemView
   itemViewContainer : "tbody"
-  className : "playlist full-height"
+  itemViewOptions : ->
+    parent : @
+
 
   initialize : ->
 
@@ -44,8 +47,13 @@ module.exports = class PlaylistView extends Marionette.CompositeView
       @playTrack()
 
 
-  playTrack : ->
+  playTrack : (model) ->
 
-    if track = @collection.at(@activeTrack)
-      app.vent.trigger("playlist:playTrack", track)
+    if model
+      track = @collection.get(model)
+      @activeTrack = @collection.indexOf(model)
+    else
+      track = @collection.at(@activeTrack)
+
+    app.vent.trigger("playlist:playTrack", track)
 
