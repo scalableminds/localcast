@@ -167,16 +167,11 @@ module.exports = function (grunt) {
   },
   connect: {
     server: {
-    options: {
-      port: 8000,
-      livereload: true,
-      base: '<%= config.build %>'
-    }
-    }
-  },
-  shell: {
-    bower: {
-      command: "bower install"
+      options: {
+        port: 8000,
+        livereload: true,
+        base: '<%= config.build %>'
+      }
     }
   }
   });
@@ -308,6 +303,6 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask("default", ["build", "connect", "watch"])
-  grunt.registerTask("build", ["shell:bower", "coffee:compile", "less:sources", "copy:copyAssets"])
+  grunt.registerTask("build", ["coffee:compile", "less:sources", "copy:copyAssets"])
 
 }
