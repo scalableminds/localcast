@@ -24,7 +24,7 @@ module.exports = class Chromecast
       .start()
 
     @listenTo(app.vent, "playlist:playTrack", @playMedia)
-    @isAppRunning = false
+    app.isCasting = false
 
 
   connect : (device) ->
@@ -49,11 +49,11 @@ module.exports = class Chromecast
       device.application(@DEFAULT_MEDIA_RECEIVER, (err, app) =>
         if (!err)
 
-          if @isAppRunning
+          if app.isCasting
             app.join(@MEDIA_NAMESPACE, @requestSession)
           else
             app.run(@MEDIA_NAMESPACE, @requestSession)
-            @isAppRunning = true
+            app.isCasting = true
       )
     )
 
@@ -117,6 +117,7 @@ module.exports = class Chromecast
         if (err)
           console.error("Unable to cast:", err.message)
           @device.stop()
+        console.log("WHAT: ", @device.status())
 
         if message
           console.log(message)

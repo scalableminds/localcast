@@ -1,6 +1,7 @@
-Marionette = require("backbone.marionette")
-app = require("../app.js")
 _ = require("lodash")
+Marionette = require("backbone.marionette")
+app = require("../app")
+Utils = require("../utils")
 
 module.exports = class PlayerControlsView extends Marionette.ItemView
 
@@ -19,7 +20,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     <div class="hbox progress-controls flex-center">
       <span class="current-time">00:00</span>
       <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
         <div class="progress-handle"></div>
       </div>
       <span class="total-time">05:00</span>
@@ -37,6 +38,8 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     "progressHandle" : ".progress-handle"
     "progressBar" : ".progress-bar"
     "progressContainer" : ".progress"
+    "totalTimeLabel" : ".total-time"
+    "currentTimeLabel" : ".current-time"
 
 
   events :
@@ -46,10 +49,24 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     "click .previous" : "previousTrack"
 
 
+  initialize : ->
+
+    @listenTo(app.vent, "playlist:playTrack", @startProgress)
+
+    @timer = ->
+      setTimeout( =>
+          @trigger("tick")
+          @timer()
+        , 100
+      )
+    @timer()
+
+
   playPauseTrack : ->
 
+    app.isPlaying = !app.isPlaying
     @ui.playButton.find("span").toggleClass("fa-play fa-pause")
-    app.vent.trigger("controls:play")
+    app.vent.trigger("controls:play", app.isPlaying)
 
 
   nextTrack : ->
@@ -62,13 +79,38 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     app.vent.trigger("controls:previous")
 
 
+  startProgress : (file) ->
+
+    @duration = file.get("duration")
+    @currentTime = 0
+    @ui.totalTimeLabel.text(Utils.msToHumanString(@duration))
+    @ui.currentTimeLabel.text(Utils.msToHumanString(@currentTime))
+
+    @stopListening(@, "tick", @showProgress) # reset
+    @listenTo(@, "tick", @showProgress)
+
+
+  showProgress : ->
+
+    if (app.isPlaying)
+      @currentTime += 100 #ms
+      @ui.currentTimeLabel.text(Utils.msToHumanString(@currentTime))
+
+      offsetX = 100 * @currentTime / @duration
+      offsetX += "%"
+
+      @ui.progressBar.width(offsetX)
+      @ui.progressHandle.css("left", offsetX)
+
+    if (@currentTime >= @duration)
+      app.vent.trigger("controls:progressEnd")
+      @stopListening(@, "tick", @showProgress)
+
+
   seek : (evt) ->
 
-    offsetX = 100 * evt.offsetX / @ui.progressContainer.width()
-    offsetX += "%"
+    offsetX = evt.offsetX / @ui.progressContainer.width()
+    @currentTime = offsetX * @duration
 
-    @ui.progressBar.width(offsetX)
-    @ui.progressHandle.css("left", offsetX)
-
-    app.vent.trigger("controls:seek", offsetX)
+    app.vent.trigger("controls:seek", @currentTime)
 

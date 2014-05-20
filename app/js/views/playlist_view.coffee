@@ -1,7 +1,7 @@
-app = require("../app.js")
-Marionette = require("backbone.marionette")
-PlaylistItemView = require("./playlist_item_view")
 _ = require("lodash")
+Marionette = require("backbone.marionette")
+app = require("../app.js")
+PlaylistItemView = require("./playlist_item_view")
 
 module.exports = class PlaylistView extends Marionette.CompositeView
 
@@ -31,6 +31,7 @@ module.exports = class PlaylistView extends Marionette.CompositeView
     @listenTo(app.vent, "controls:next", @nextTrack)
     @listenTo(app.vent, "controls:previous", @previousTrack)
     @listenTo(app.vent, "controls:play", @playTrack)
+    @listenTo(app.vent, "controls:progressEnd", @nextTrack)
 
 
   nextTrack : ->
@@ -55,5 +56,6 @@ module.exports = class PlaylistView extends Marionette.CompositeView
     else
       track = @collection.at(@activeTrack)
 
+    app.isPlaying = true
     app.vent.trigger("playlist:playTrack", track)
 

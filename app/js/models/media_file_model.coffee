@@ -6,11 +6,16 @@ module.exports = class MediaFileModel extends Backbone.Model
       "image/jpeg",
       "image/png",
       "image/gif",
-      "video/mp4"
+      "image/webp",
+      "image/bmp",
+      "video/mp4",
+      "video/avi",
+      "video/mkv",
+      "video/webm",
     ]
 
     defaults :
-      duration : 0
+      duration : 20000 #ms
       isActive : false
 
     validate : (file, options) ->

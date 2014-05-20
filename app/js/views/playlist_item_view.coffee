@@ -1,6 +1,7 @@
 _ = require("lodash")
-app = require("../app")
 Marionette = require("backbone.marionette")
+app = require("../app")
+Utils = require("../utils.js")
 
 module.exports = class PlaylistView extends Marionette.ItemView
 
@@ -12,8 +13,11 @@ module.exports = class PlaylistView extends Marionette.ItemView
         <span class="fa fa-volume-up"></span>
       <% } %>
     </td>
-    <td><%= duration %></td>
+    <td><%= Utils.msToHumanString(duration) %></td>
   """)
+
+  templateHelpers :
+    Utils : Utils
 
   events :
     "dblclick" : "playTrack"

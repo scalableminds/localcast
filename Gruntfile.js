@@ -131,16 +131,16 @@ module.exports = function (grunt) {
     livereload: true
     },
     coffee: {
-    files: '<%= config.app %>/js/**/*.coffee',
-    tasks: ["coffee:compile"]
+      files: '<%= config.app %>/js/**/*.coffee',
+      tasks: ["coffee:compile"]
     },
     less: {
-    files: '<%= config.app %>/css/**/*.less',
-    tasks: ["less"]
+      files: '<%= config.app %>/css/**/*.less',
+      tasks: ["less"]
     },
     html: {
-    files:  '<%= config.app %>/**/*.html',
-    tasks: ["copy:copyAssets"]
+      files:  '<%= config.app %>/**/*.html',
+      tasks: ["copy:copyAssets"]
     }
   },
   coffee: {

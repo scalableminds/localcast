@@ -41,6 +41,9 @@
     flex: 0.85;
     height: @controlsHeight;
 
+    .progress-bar {
+      -webkit-transition: none;
+    }
 
     .progress {
       cursor: pointer;
@@ -58,7 +61,7 @@
       border: 1px solid black;
       background-color: white;
       position: absolute;
-      left: 60%;
+      left: 0%;
       margin-left: -@handleHeight / 2;
       margin-top: -(@handleHeight - @progressHeight) / 2;
     }
