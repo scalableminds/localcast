@@ -52,6 +52,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
   initialize : ->
 
     @listenTo(app.vent, "playlist:playTrack", @startProgress)
+    @listenTo(app.vent, "playlist:playTrack", @playPauseTrack)
 
     @timer = ->
       setTimeout( =>
@@ -62,11 +63,22 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     @timer()
 
 
-  playPauseTrack : ->
+  playPauseTrack : (arg) ->
 
-    app.isPlaying = !app.isPlaying
-    @ui.playButton.find("span").toggleClass("fa-play fa-pause")
-    app.vent.trigger("controls:play", app.isPlaying)
+    unless arg.get
+      #call was trigger by click on button not by event
+      app.isPlaying = !app.isPlaying
+
+      if @currentTime == 0
+        app.vent.trigger("controls:play", app.isPlaying)
+
+    if app.isPlaying
+      @ui.playButton.find("span").removeClass("fa-play")
+      @ui.playButton.find("span").addClass("fa-pause")
+    else
+      console.log "pause"
+      @ui.playButton.find("span").removeClass("fa-pause")
+      @ui.playButton.find("span").addClass("fa-play")
 
 
   nextTrack : ->
