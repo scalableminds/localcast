@@ -24,7 +24,9 @@ module.exports = class Chromecast
       .start()
 
     @listenTo(app.vent, "playlist:playTrack", @playMedia)
-    app.isCasting = false
+    @listenTo(app.vent, "controls:pause", @pause)
+    @listenTo(app.vent, "controls:continue", @play)
+    @listenTo(app.vent, "controls:seek", @seek)
 
 
   connect : (device) ->
@@ -65,8 +67,6 @@ module.exports = class Chromecast
 
   playMedia : (file) ->
 
-    @mediaSessionId = 1234
-
     mediaInfo =
       contentId : "#{server.getServerUrl()}#{file.get('path')}",
       streamType : file.get("streamType"),
@@ -83,7 +83,7 @@ module.exports = class Chromecast
 
     request =
       type : "SEEK",
-      currentTime : time
+      currentTime : time / 1000 #in seconds
 
     @sendCommand(request)
 
@@ -109,18 +109,21 @@ module.exports = class Chromecast
     if @session
 
       request = _.extend(request,
-        mediaSessionId : @medmediaSessionId
+        mediaSessionId : @mediaSessionId
         requestId : 123,
       )
-
+      console.log request
       @session.send(request, (err, message) =>
         if (err)
           console.error("Unable to cast:", err.message)
           @device.stop()
-        console.log("WHAT: ", @device.status())
 
         if message
-          console.log(message)
+          if message.type == "MEDIA_STATUS"
+            @mediaSessionId = message.status[0].mediaSessionId
+            console.log @mediaSessionId
+
+          console.log("RESPONSE ", message)
       )
 
 

@@ -75,10 +75,11 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     if app.isPlaying
       @ui.playButton.find("span").removeClass("fa-play")
       @ui.playButton.find("span").addClass("fa-pause")
+      app.vent.trigger("controls:continue")
     else
-      console.log "pause"
       @ui.playButton.find("span").removeClass("fa-pause")
       @ui.playButton.find("span").addClass("fa-play")
+      app.vent.trigger("controls:pause")
 
 
   nextTrack : ->
@@ -125,4 +126,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     @currentTime = offsetX * @duration
 
     app.vent.trigger("controls:seek", @currentTime)
+
+    @stopListening(@, "tick", @showProgress) # reset
+    @listenTo(@, "tick", @showProgress)
 
