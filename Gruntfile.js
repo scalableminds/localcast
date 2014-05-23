@@ -167,11 +167,19 @@ module.exports = function (grunt) {
   },
   connect: {
     server: {
-      options: {
-        port: 8000,
-        livereload: true,
-        base: '<%= config.build %>'
-      }
+    options: {
+      port: 8000,
+      livereload: true,
+      base: '<%= config.build %>'
+    }
+    }
+  },
+  shell: {
+    bower: {
+      command: "bower install"
+    },
+    patch: {
+      command: './setup'
     }
   },
   nodewebkit: {
@@ -185,11 +193,6 @@ module.exports = function (grunt) {
     },
     src: ['<%= config.build %>/**/*']
   },
-  shell: {
-    patch: {
-      command: './setup'
-    }
-  }
   });
 
   grunt.registerTask('chmod', 'Add lost Permissions.', function () {
@@ -323,6 +326,6 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask("default", ["build", "connect", "watch"])
-  grunt.registerTask("build", ["coffee:compile", "less:sources", "copy:copyAssets"])
+  grunt.registerTask("build", ["shell:bower", "coffee:compile", "less:sources", "copy:copyAssets"])
 
 }
