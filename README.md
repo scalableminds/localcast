@@ -10,8 +10,10 @@ Stream your local media to Chromecast
 npm install -g nodewebkit
 npm install -g nw-gyp
 npm install -g grunt-cli
+npm install -g bower
 npm install
 
+// on OSX apply a patch and compile a lib for 32bit Nodewebkit
 ./setup
 ```
 
@@ -20,5 +22,15 @@ npm install
 
 ```bash
 grunt build
-nodewebkit build
+nodewebkit ./build
 ```
+
+## Cross Platform Builds
+
+```bash
+grunt dist
+```
+
+This will build excecutables for Win64, OSX and Linux 32/64 in the ./dist directory.
+
+

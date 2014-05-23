@@ -28,6 +28,8 @@ module.exports = class Chromecast
     @listenTo(app.vent, "controls:continue", @play)
     @listenTo(app.vent, "controls:seek", @seek)
 
+    @requestId = 0
+
 
   connect : (device) ->
 
@@ -110,7 +112,7 @@ module.exports = class Chromecast
 
       request = _.extend(request,
         mediaSessionId : @mediaSessionId
-        requestId : 123,
+        requestId : @requestId++,
       )
       console.log request
       @session.send(request, (err, message) =>

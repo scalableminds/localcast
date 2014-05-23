@@ -8,11 +8,11 @@ module.exports = function (grunt) {
 
   // configurable paths
   var config = {
-  app: 'app',
-  build: 'build',
-  dist: 'dist',
-  tmp: 'tmp',
-  resources: 'resources'
+    app: 'app',
+    build: 'build',
+    dist: 'dist',
+    tmp: 'tmp',
+    resources: 'resources'
   };
 
   grunt.initConfig({
@@ -173,6 +173,22 @@ module.exports = function (grunt) {
         base: '<%= config.build %>'
       }
     }
+  },
+  nodewebkit: {
+    options: {
+        version: "0.8.6", // make sure to change ./setup when touching this
+        build_dir: './dist',
+        mac: true,
+        win: false,
+        linux32: false,
+        linux64: false
+    },
+    src: ['<%= config.build %>/**/*']
+  },
+  shell: {
+    patch: {
+      command: './setup'
+    }
   }
   });
 
@@ -255,28 +271,32 @@ module.exports = function (grunt) {
   'jshint',
   'clean:dist',
   'build',
-  'copy:appLinux',
-  'createLinuxApp'
+  // 'copy:appLinux',
+  // 'createLinuxApp'
+  'nodewebkit'
   ]);
 
   grunt.registerTask('dist-win', [
   'jshint',
   'clean:dist',
   'build',
-  'copy:copyWinToTmp',
-  'compress:appToTmp',
-  'rename:zipToApp',
-  'createWindowsApp',
-  'compress:finalWindowsApp'
+  // 'copy:copyWinToTmp',
+  // 'compress:appToTmp',
+  // 'rename:zipToApp',
+  // 'createWindowsApp',
+  // 'compress:finalWindowsApp'
+  'nodewebkit'
   ]);
 
   grunt.registerTask('dist-mac', [
   'clean:dist',
   'build',
-  'copy:webkit',
-  'copy:appMacos',
-  'rename:app',
-  'chmod'
+  // 'copy:webkit',
+  // 'copy:appMacos',
+  // 'rename:app',
+  // 'chmod'
+  'shell:patch',
+  'nodewebkit'
   ]);
 
   grunt.registerTask('check', [

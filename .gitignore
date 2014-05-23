@@ -4,3 +4,5 @@ resources/node-webkit
 build
 bower_components
 dist
+
+npm-debug.log
