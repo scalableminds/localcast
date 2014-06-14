@@ -8,15 +8,13 @@
 .player-controls {
 
   background: white;
-  border-top: 1px solid #444;
+  border-top: 1px solid #aaa;
   margin: 0 -1 * @containerPadding;
   padding: 5px 10px;
 
 
   .button-controls {
-    min-width: 180px;
     height: @controlsHeight;
-    flex: 0.1;
 
     .btn {
       outline: none;
@@ -29,6 +27,9 @@
 
     .play {
       .roundButton(@controlsHeight);
+      .fa.fa-play {
+        padding-left: 3px;
+      }
     }
 
     .next {
@@ -38,7 +39,7 @@
   }
 
   .progress-controls {
-    flex: 0.85;
+    flex: 1;
     height: @controlsHeight;
 
     .progress-bar {
@@ -47,7 +48,7 @@
 
     .progress {
       cursor: pointer;
-      flex: 0.8;
+      flex: 1;
       display: inline-block;
       position: relative;
       width: 100%;
@@ -67,22 +68,19 @@
     }
 
     .current-time, .total-time {
-      flex: 0.1;
+      width: 70px;
       text-align: center;
     }
   }
 
   .shuffle-cast {
-    flex: 0.05;
     text-align: center;
     white-space: nowrap;
 
     span {
       cursor: pointer;
-
-      &:first-child {
-      margin-right: 10px;
-      }
+      margin-left: 5px;
+      margin-right: 5px;
     }
 
     .disabled {
