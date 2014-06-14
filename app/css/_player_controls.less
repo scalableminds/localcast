@@ -14,9 +14,8 @@
 
 
   .button-controls {
-    min-width: 180px;
+    width: 168px;
     height: @controlsHeight;
-    flex: 0.1;
 
     .btn {
       outline: none;
@@ -29,6 +28,9 @@
 
     .play {
       .roundButton(@controlsHeight);
+      .fa.fa-play {
+        padding-left: 3px;
+      }
     }
 
     .next {
@@ -38,7 +40,7 @@
   }
 
   .progress-controls {
-    flex: 0.85;
+    flex: 1;
     height: @controlsHeight;
 
     .progress-bar {
@@ -47,7 +49,7 @@
 
     .progress {
       cursor: pointer;
-      flex: 0.8;
+      flex: 1;
       display: inline-block;
       position: relative;
       width: 100%;
@@ -67,13 +69,13 @@
     }
 
     .current-time, .total-time {
-      flex: 0.1;
+      width: 70px;
       text-align: center;
     }
   }
 
   .shuffle-cast {
-    flex: 0.05;
+    width: 60px;
     text-align: center;
     white-space: nowrap;
 
