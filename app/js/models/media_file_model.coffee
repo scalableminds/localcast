@@ -1,4 +1,6 @@
 Backbone = require("Backbone")
+Compatibility = require("../compatibility")
+
 
 module.exports = class MediaFileModel extends Backbone.Model
 
@@ -12,11 +14,17 @@ module.exports = class MediaFileModel extends Backbone.Model
       "video/avi",
       "video/mkv",
       "video/webm",
+      "audio/ogg",
+      "audio/mp3",
+      "audio/acc",
+      "audio/vorbis"
     ]
 
     defaults :
-      duration : 20000 #ms
+      duration : 15000 #ms
       isActive : false
+      isVideoCompatible : true
+      isAudioCompatible : true
 
     validate : (file, options) ->
 
@@ -27,11 +35,22 @@ module.exports = class MediaFileModel extends Backbone.Model
     initialize : (file) ->
 
       switch file.type.split("/")[0]
-        when"image"
+        when "image"
           @set("streamType", "NONE")
-        when"video"
-          @set("streamType", "BUFFERED")
+          @set("duration", 15000)
 
+        when "video"
+          @set("streamType", "BUFFERED")
+          @checkCompatibility()
+
+        when "audio"
+          @set("streamType", "BUFFERED")
+          @checkCompatibility()
+
+
+    checkCompatibility : ->
+
+      Compatibility.probe(@, @set.bind(@))
 
 
 

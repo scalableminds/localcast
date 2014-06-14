@@ -23,7 +23,8 @@
     "bootstrap": "0.0.2",
     "nodecastor": "~0.1.4",
     "ecstatic": "~0.5.3",
-    "ip": "~0.3.0"
+    "ip": "~0.3.0",
+    "node-ffprobe": "~1.2.2"
   },
   "devDependencies": {
     "matchdep": "~0.1.2",

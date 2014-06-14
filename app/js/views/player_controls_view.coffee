@@ -94,7 +94,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   startProgress : (status) ->
 
-    if status.media # only responses to LOAD contain media info
+    if status.media # only status responses to LOAD contain media info
       @duration = status.media.duration * 1000 # convert to ms
 
     @currentTime = status.currentTime * 1000
@@ -103,8 +103,6 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
     @stopListening(@, "tick", @showProgress) # reset
     @listenTo(@, "tick", @showProgress)
-
-    console.log(@currentTime, @duration)
 
 
   showProgress : ->

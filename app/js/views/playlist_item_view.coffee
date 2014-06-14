@@ -1,7 +1,7 @@
 _ = require("lodash")
 Marionette = require("backbone.marionette")
 app = require("../app")
-Utils = require("../utils.js")
+Utils = require("../utils")
 
 module.exports = class PlaylistView extends Marionette.ItemView
 
@@ -14,6 +14,8 @@ module.exports = class PlaylistView extends Marionette.ItemView
       <% } %>
     </td>
     <td><%= Utils.msToHumanString(duration) %></td>
+    <td><i class="fa <% if(isVideoCompatible){ %> fa-check <% } else { %> fa-times <% } %> "</td>
+    <td><i class="fa <% if(isAudioCompatible){ %> fa-check <% } else { %> fa-times <% } %> "</td>
   """)
 
   templateHelpers :
@@ -36,6 +38,7 @@ module.exports = class PlaylistView extends Marionette.ItemView
 
     @listenTo(app.vent, "playlist:playTrack", @update)
     @listenTo(@, "render", @afterRender)
+    @listenTo(@model, "change", @render)
 
 
   update : (newTrack) ->
