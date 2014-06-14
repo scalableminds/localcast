@@ -78,6 +78,9 @@ module.exports = class Chromecast
       type : "LOAD",
       media : mediaInfo
 
+    #the LOAD command's response contains the mediaSessionId
+    @mediaSessionId = null
+
     @sendCommand(request)
 
 
@@ -114,21 +117,24 @@ module.exports = class Chromecast
         mediaSessionId : @mediaSessionId
         requestId : @requestId++,
       )
-      console.log request
-      @session.send(request, (err, message) =>
-        if (err)
-          console.error("Unable to cast:", err.message)
-          @device.stop()
-
-        if message
-          if message.type == "MEDIA_STATUS"
-            @mediaSessionId = message.status[0].mediaSessionId
-            console.log @mediaSessionId
-
-          console.log("RESPONSE ", message)
-      )
+      console.log "COMMAND ", request
+      @session.send(request, @handleCastResponse.bind(this))
 
 
+  handleCastResponse : (err, message) ->
+
+    if (err)
+      console.error("Unable to cast:", err.message)
+      @device.stop()
+
+    if message
+      if message.type == "MEDIA_STATUS"
+        status = message.status[0]
+        @mediaSessionId = status.mediaSessionId
+
+        app.vent.trigger("chromecast:status", status)
+
+    console.log("RESPONSE ", message)
 
 
 

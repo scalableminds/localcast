@@ -51,8 +51,8 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   initialize : ->
 
-    @listenTo(app.vent, "playlist:playTrack", @startProgress)
     @listenTo(app.vent, "playlist:playTrack", @playPauseTrack)
+    @listenTo(app.vent, "chromecast:status", @startProgress)
 
     @timer = ->
       setTimeout( =>
@@ -92,15 +92,19 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     app.vent.trigger("controls:previous")
 
 
-  startProgress : (file) ->
+  startProgress : (status) ->
 
-    @duration = file.get("duration")
-    @currentTime = 0
+    if status.media # only responses to LOAD contain media info
+      @duration = status.media.duration * 1000 # convert to ms
+
+    @currentTime = status.currentTime * 1000
     @ui.totalTimeLabel.text(Utils.msToHumanString(@duration))
     @ui.currentTimeLabel.text(Utils.msToHumanString(@currentTime))
 
     @stopListening(@, "tick", @showProgress) # reset
     @listenTo(@, "tick", @showProgress)
+
+    console.log(@currentTime, @duration)
 
 
   showProgress : ->
