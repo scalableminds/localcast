@@ -56,7 +56,8 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
     @timer = ->
       setTimeout( =>
-          @trigger("tick")
+          @trigger("tick", @lastTick)
+          @lastTick = Date.now()
           @timer()
         , 100
       )
@@ -105,10 +106,10 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     @listenTo(@, "tick", @showProgress)
 
 
-  showProgress : ->
+  showProgress : (lastTick) ->
 
     if (app.isPlaying)
-      @currentTime += 100 #ms
+      @currentTime += Date.now() - lastTick #ms
       @ui.currentTimeLabel.text(Utils.msToHumanString(@currentTime))
 
       offsetX = 100 * @currentTime / @duration
