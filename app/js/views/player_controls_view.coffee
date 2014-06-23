@@ -51,7 +51,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   initialize : ->
 
-    @listenTo(app.vent, "playlist:playTrack", @playPauseTrack)
+    @listenTo(app.vent, "playlist:playTrack", @updatePlayPauseTrack)
     @listenTo(app.vent, "chromecast:status", @startProgress)
 
     @timer = ->
@@ -66,12 +66,16 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   playPauseTrack : (arg) ->
 
-    unless arg.get
-      #call was trigger by click on button not by event
-      app.isPlaying = !app.isPlaying
+    #call was trigger by click on button not by event
 
-      if @currentTime == 0
-        app.vent.trigger("controls:play", app.isPlaying)
+    app.isPlaying = !app.isPlaying
+    if app.isPlaying
+      app.vent.trigger("controls:play")
+
+    @updatePlayPauseTrack()
+
+
+  updatePlayPauseTrack : ->
 
     if app.isPlaying
       @ui.playButton.find("span").removeClass("fa-play")

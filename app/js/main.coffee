@@ -12,3 +12,5 @@ app.isCasting = false
 chromecast = new Chromecast()
 mainLayouter = new MainLayouter()
 document.body.appendChild(mainLayouter.render().el)
+
+console.log(process.versions['node-webkit'])

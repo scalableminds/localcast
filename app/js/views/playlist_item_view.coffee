@@ -2,6 +2,7 @@ _ = require("lodash")
 Marionette = require("backbone.marionette")
 app = require("../app")
 Utils = require("../utils")
+$ = require("jquery")
 
 module.exports = class PlaylistView extends Marionette.ItemView
 
@@ -23,13 +24,15 @@ module.exports = class PlaylistView extends Marionette.ItemView
 
   events :
     "dblclick" : "playTrack"
+    "click" : "selectTrack"
+    "click" : "clickOrDBClick"
 
   className : ->
 
-    if @model.get("isActive")
-      return "active"
-    else
-      return ""
+    klass = ""
+    klass += "active " if @model.get("isActive")
+    klass += "selected" if @model.get("isSelected")
+    return klass
 
 
   initialize : (options) ->
@@ -39,6 +42,8 @@ module.exports = class PlaylistView extends Marionette.ItemView
     @listenTo(app.vent, "playlist:playTrack", @update)
     @listenTo(@, "render", @afterRender)
     @listenTo(@model, "change", @render)
+
+    @alreadyClicked = false
 
 
   update : (newTrack) ->
@@ -57,6 +62,7 @@ module.exports = class PlaylistView extends Marionette.ItemView
 
   playTrack : ->
 
+    @selectTrack()
     @parent.playTrack(@model)
 
 
@@ -64,6 +70,36 @@ module.exports = class PlaylistView extends Marionette.ItemView
 
     # update classname
     @$el.attr("class", _.result(@, "className"))
+
+
+  selectTrack : ->
+
+    oldModel = @parent.collection.at(@parent.activeTrack)
+    oldModel.set("isSelected", false)
+
+    @parent.activeTrack = @parent.collection.indexOf(@model)
+    @model.set("isSelected", true)
+
+    #$(".selected").removeClass("selected") # TODO HACKY
+    @render()
+
+
+  clickOrDBClick : ->
+
+    if @alreadyClicked
+      # dbclick
+      @playTrack()
+      @alreadyClicked = false
+      clearTimeout(@timeout)
+    else
+      @timeout = setTimeout( =>
+        @selectTrack()
+        @alreadyClicked = false
+      , 200)
+      @alreadyClicked = true
+
+
+
 
 
 

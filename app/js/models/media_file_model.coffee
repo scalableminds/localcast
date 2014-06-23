@@ -23,6 +23,7 @@ module.exports = class MediaFileModel extends Backbone.Model
     defaults :
       duration : 15000 #ms
       isActive : false
+      isSelected : false
       isVideoCompatible : true
       isAudioCompatible : true
 
