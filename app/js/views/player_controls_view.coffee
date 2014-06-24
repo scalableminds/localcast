@@ -27,7 +27,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     </div>
     <div class="shuffle-cast">
       <!--<span class="fa fa-random fa-lg disabled"></span>-->
-      <span class="fa fa-rss fa-lg disabled"></span>
+      <span class="icon-chromecast"></span>
     </div>
   """)
 

@@ -16,7 +16,8 @@ module.exports = class Chromecast
     nodecastor
       .scan()
       .on("online", (device) =>
-        @connect(device)
+        app.vent.trigger("chromecast:device_found", device)
+        #@connect(device)
       )
       .on("offline", (device) ->
         console.log("Removed device", device)
@@ -27,30 +28,33 @@ module.exports = class Chromecast
     @listenTo(app.vent, "controls:pause", @pause)
     @listenTo(app.vent, "controls:continue", @play)
     @listenTo(app.vent, "controls:seek", @seek)
+    @listenTo(app.vent, "device-selection:selected", @connect)
 
     @requestId = 0
 
 
   connect : (device) ->
 
+    console.log device
+
     device.on("connect", =>
 
       @device = device
 
-      device.status((err, s) ->
+      @device.status((err, s) ->
         if (!err)
           console.log("Chromecast status", s)
       )
 
-      device.on("status", (status) ->
+      @device.on("status", (status) ->
         console.log("Chromecast status updated", status)
       )
 
-      device.on("error", (err) ->
+      @device.on("error", (err) ->
         console.error("An error occurred with some Chromecast device", err)
       )
 
-      device.application(@DEFAULT_MEDIA_RECEIVER, (err, app) =>
+      @device.application(@DEFAULT_MEDIA_RECEIVER, (err, app) =>
         if (!err)
 
           if app.isCasting
@@ -63,8 +67,8 @@ module.exports = class Chromecast
 
   requestSession : (err, session) =>
 
-      if(!err)
-        @session = session
+    if(!err)
+      @session = session
 
 
   playMedia : (file) ->

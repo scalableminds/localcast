@@ -6,6 +6,7 @@
 @import "_playlist.less";
 @import "_player_controls.less";
 @import "_drag_drop.less";
+@import "_device_selection.less";
 
 // div, span, section {
 //   border: 1px solid black;
@@ -47,4 +48,17 @@
 .content-container {
   overflow-y: auto;
   height: calc(100% ~"-" @navbarHeight);
+}
+
+.icon-chromecast {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-image: url("../img/cast-disabled.png");
+
+  .on {
+    background-image: url("../img/cast-enabled.png");
+  }
 }

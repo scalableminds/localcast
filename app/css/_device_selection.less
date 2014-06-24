@@ -1,0 +1,37 @@
+@import "_variables.less";
+
+.device-selection {
+
+  width: 500px;
+  top: 35%;
+  left: 50%;
+  position: fixed;
+  background-color: white;
+  border: 1px @mediumGrey solid;
+  margin-left: -250px;
+  margin-right: auto;
+  z-index: 1;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+
+  .header {
+    border-bottom: 1px solid @bootstrapLightGrey;
+    padding: 20px;
+  }
+
+  .body {
+    padding: 20px;
+
+    li {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+
+    .device {
+      line-height: 32px;
+      vertical-align: text-bottom;
+      padding: 10px;
+    }
+  }
+
+
+}
