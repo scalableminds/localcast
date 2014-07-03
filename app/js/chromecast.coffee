@@ -35,11 +35,9 @@ module.exports = class Chromecast
 
   connect : (device) ->
 
-    console.log device
+    @device = new nodecastor.CastDevice(device)
 
-    device.on("connect", =>
-
-      @device = device
+    @device.on("connect", =>
 
       @device.status((err, s) ->
         if (!err)

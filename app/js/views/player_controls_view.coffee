@@ -47,6 +47,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     "click @ui.progressContainer" : "seek"
     "click .next" : "nextTrack"
     "click .previous" : "previousTrack"
+    "click .icon-chromecast" : "showDevices"
 
 
   initialize : ->
@@ -110,9 +111,9 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     @listenTo(@, "tick", @showProgress)
 
 
-  showProgress : (lastTick) ->
+  showProgress : (lastTick, forceRender) ->
 
-    if (app.isPlaying)
+    if (app.isPlaying or forceRender)
       @currentTime += Date.now() - lastTick #ms
       @ui.currentTimeLabel.text(Utils.msToHumanString(@currentTime))
 
@@ -135,5 +136,9 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
     app.vent.trigger("controls:seek", @currentTime)
 
     @stopListening(@, "tick", @showProgress) # reset
-    @listenTo(@, "tick", @showProgress)
+    @listenToOnce(@, "tick", (lastTick) -> @showProgress(lastTick, true)) # force rendering once, in case playback is paused
 
+
+  showDevices : ->
+
+    app.commands.execute("showCastDevices")
