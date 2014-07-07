@@ -72,7 +72,7 @@ module.exports = class Chromecast
   playMedia : (file) ->
 
     mediaInfo =
-      contentId : "#{server.getServerUrl()}#{file.get('path')}",
+      contentId : "#{server.getServerUrl()}/chromecast/#{Date.now()}",
       streamType : file.get("streamType"),
       contentType : file.get("type")
 

@@ -1,6 +1,10 @@
 http = require("http")
-ecstatic = require("ecstatic")
+express = require("express")
 ip = require("ip")
+_ = require("lodash")
+Backbone = require("backbone")
+app = require("./app")
+
 
 class Server
 
@@ -8,9 +12,21 @@ class Server
 
   constructor : ->
 
-    http.createServer(
-      ecstatic(root: "/" )
-    ).listen(@PORT)
+    _.extend(@, Backbone.Events)
+    @listenTo(app.vent, "playlist:playTrack", (file) ->
+      @path = file.get("path")
+    )
+
+    @path = null
+
+    server = express()
+    server.get("/chromecast/:cachebuster", (req, res, next) =>
+      if @path
+        res.sendfile(@path)
+      else
+        res.send(404)
+    )
+    server.listen(@PORT)
 
 
   getServerUrl : ->

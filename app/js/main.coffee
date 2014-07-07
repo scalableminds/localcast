@@ -1,7 +1,7 @@
 global.document = window.document
-Chromecast = require("./js/chromecast")
-MainLayouter = require("./js/views/main_layouter")
 app = require("./js/app")
+MainLayouter = require("./js/views/main_layouter")
+Chromecast = require("./js/chromecast")
 require('backbone').$ = require("jquery")
 
 app.isPlaying = false
