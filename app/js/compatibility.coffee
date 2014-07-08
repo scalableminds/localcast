@@ -58,4 +58,4 @@ module.exports =
 
   duration : (probeData) ->
 
-    probeData.streams[0].duration * 1000 # convert to ms
+    probeData.format.duration * 1000 # convert to ms
