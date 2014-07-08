@@ -13,6 +13,17 @@ module.exports = class Chromecast
 
     _.extend(@, Backbone.Events)
 
+    @listenTo(app.vent, "playlist:playTrack", @playMedia)
+    @listenTo(app.vent, "controls:pause", @pause)
+    @listenTo(app.vent, "controls:continue", @play)
+    @listenTo(app.vent, "controls:seek", @seek)
+    @listenTo(app.vent, "device-selection:selected", @connect)
+    app.commands.setHandler("scanForDevices", @scan)
+
+    @requestId = 0
+
+
+  scan : ->
     nodecastor
       .scan()
       .on("online", (device) =>
@@ -23,15 +34,6 @@ module.exports = class Chromecast
         console.log("Removed device", device)
       )
       .start()
-
-    @listenTo(app.vent, "playlist:playTrack", @playMedia)
-    @listenTo(app.vent, "controls:pause", @pause)
-    @listenTo(app.vent, "controls:continue", @play)
-    @listenTo(app.vent, "controls:seek", @seek)
-    @listenTo(app.vent, "device-selection:selected", @connect)
-
-    @requestId = 0
-
 
   connect : (device) ->
 

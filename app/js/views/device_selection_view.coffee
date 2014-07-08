@@ -1,5 +1,6 @@
 _ = require("lodash")
 Marionette = require("backbone.marionette")
+Backbone = require("backbone")
 $ = require("jquery")
 app = require("../app")
 Utils = require("../utils")
@@ -13,7 +14,7 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
     </div>
     <div class="body">
       <ul>
-      <% _.each(obj, function(device){ %>
+      <% _.each(items, function(device){ %>
         <li>
           <a data-id="<%= device.id %>" href="#">
             <span class="icon-chromecast"></span>
@@ -32,24 +33,45 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
 
   initialize : ->
 
-    @listenTo(@, "show", @afterRender)
+    @collection = new Backbone.Collection()
+
+    @listenTo(app.vent, "chromecast:device_found", @addDeviceToCollection)
+    @listenTo(@collection, "add", @render)
+    @listenTo(@collection, "render", @render)
+    app.commands.setHandler("showCastDevices", @showDeviceSelection.bind(this)) #showing the dialog again will not refresh the device list
 
 
-  serializeData : ->
+  scanForDevices : ->
 
-    return @collection
+    @collection.reset()
+    app.commands.execute("scanForDevices")
+
+
+  addDeviceToCollection : (device) ->
+
+    console.log device
+    # prevent double entries
+    unless @collection.findWhere(friendlyName: device.friendlyName)
+      @collection.add(device)
+
+
+  showDeviceSelection : ->
+
+    @scanForDevices()
+    @render()
+    @show()
 
 
   selectDevice : (evt) ->
 
     deviceID = $(evt.currentTarget).data("id")
-    deviceModel = _.findWhere(@collection, id : deviceID)
-    app.vent.trigger("device-selection:selected", deviceModel)
+    deviceModel = @collection.findWhere(id : deviceID)
+    app.vent.trigger("device-selection:selected", deviceModel.attributes)
 
     @close()
 
 
-  afterRender : ->
+  show : ->
 
     @$el.addClass("in")
 

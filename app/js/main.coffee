@@ -13,4 +13,4 @@ chromecast = new Chromecast()
 mainLayouter = new MainLayouter()
 document.body.appendChild(mainLayouter.render().el)
 
-console.log(process.versions['node-webkit'])
+console.log("nodewebkit version: ", process.versions['node-webkit'])

@@ -42,16 +42,16 @@ module.exports = class MainLayouter extends Marionette.Layout
 
     @deviceSelectionView = new DeviceSelectionView()
 
-
     @listenTo(@, "render", @showRegions)
-    @listenToOnce(app.vent, "chromecast:device_found", @showDeviceSelection)
-    app.commands.setHandler("showCastDevices", @showDeviceSelection.bind(this)) #showing the dialog again will not refresh the device list
+
+    app.commands.execute("showCastDevices")
 
 
   showRegions : ->
 
     @sectionContent.show(@dragDropView)
     @sectionControls.show(@playerControlsView)
+    @sectionModal.show(@deviceSelectionView)
 
 
   fileDrop : (evt) =>
@@ -69,15 +69,6 @@ module.exports = class MainLayouter extends Marionette.Layout
 
     @sectionContent.show(@playlistView)
 
-
-  showDeviceSelection : (devices) ->
-
-    if devices
-      unless _.isArray(devices)
-        devices = [devices]
-      @deviceSelectionView.collection = devices
-
-    @sectionModal.show(@deviceSelectionView)
 
 
 
