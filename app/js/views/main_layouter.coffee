@@ -30,10 +30,6 @@ module.exports = class MainLayouter extends Marionette.Layout
 
   initialize : ->
 
-    # prevent default behavior from changing page on dropped file
-    window.ondrop = (evt) -> evt.preventDefault(); return false
-    window.ondragover = (evt) -> evt.preventDefault(); return false
-
     @playerControlsView = new PlayerControlsView()
     @dragDropView = new DragDropView()
 

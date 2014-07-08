@@ -16,6 +16,10 @@ module.exports = class DragDropView extends Marionette.ItemView
 
   initialize : ->
 
+    # prevent default behavior from changing page on dropped file
+    window.ondrop = (evt) -> evt.preventDefault(); return false
+    window.ondragover = (evt) -> evt.preventDefault(); return false
+
     $(window).on(
       dragover : @fileHover.bind(@)
       dragend :  @fileDragEnd.bind(@)
