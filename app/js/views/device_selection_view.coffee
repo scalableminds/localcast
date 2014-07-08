@@ -66,7 +66,7 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
 
     deviceID = $(evt.currentTarget).data("id")
     deviceModel = @collection.findWhere(id : deviceID)
-    app.vent.trigger("device-selection:selected", deviceModel.attributes)
+    app.commands.execute("useDevice", deviceModel.attributes)
 
     @close()
 

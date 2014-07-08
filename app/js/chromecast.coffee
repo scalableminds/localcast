@@ -17,7 +17,7 @@ module.exports = class Chromecast
     @listenTo(app.vent, "controls:pause", @pause)
     @listenTo(app.vent, "controls:continue", @play)
     @listenTo(app.vent, "controls:seek", @seek)
-    @listenTo(app.vent, "device-selection:selected", @connect)
+    app.commands.setHandler("useDevice", @connect.bind(@))
     app.commands.setHandler("scanForDevices", @scan)
 
     @requestId = 0
@@ -35,7 +35,17 @@ module.exports = class Chromecast
       )
       .start()
 
+
   connect : (device) ->
+
+    # trying to connected to same device?
+    if device == @device
+      return
+
+    # in case we were previously casting, stop
+    if app.isCasting or app.isPlaying
+      app.isCasting = app.isPlaying = false
+      @stop()
 
     @device = new nodecastor.CastDevice(device)
 
@@ -54,13 +64,13 @@ module.exports = class Chromecast
         console.error("An error occurred with some Chromecast device", err)
       )
 
-      @device.application(@DEFAULT_MEDIA_RECEIVER, (err, app) =>
+      @device.application(@DEFAULT_MEDIA_RECEIVER, (err, receiver_app) =>
         if (!err)
 
           if app.isCasting
-            app.join(@MEDIA_NAMESPACE, @requestSession)
+            receiver_app.join(@MEDIA_NAMESPACE, @requestSession)
           else
-            app.run(@MEDIA_NAMESPACE, @requestSession)
+            receiver_app.run(@MEDIA_NAMESPACE, @requestSession)
             app.isCasting = true
       )
     )
@@ -109,6 +119,14 @@ module.exports = class Chromecast
 
     request =
       type : "PAUSE",
+
+    @sendCommand(request)
+
+
+  stop : ->
+
+    request =
+      type : "STOP",
 
     @sendCommand(request)
 

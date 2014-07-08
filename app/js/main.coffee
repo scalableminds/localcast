@@ -6,8 +6,6 @@ require('backbone').$ = require("jquery")
 
 app.isPlaying = false
 app.isCasting = false
-app.isCasting = false
-
 
 chromecast = new Chromecast()
 mainLayouter = new MainLayouter()
