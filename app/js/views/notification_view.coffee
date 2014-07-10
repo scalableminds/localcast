@@ -7,11 +7,13 @@ require('backbone').$ = require("jquery")
 
 class NotificationView extends Marionette.ItemView
 
+  TIMEOUT : 3000
+
   template : _.template("""
     <div>
       <button type="button" class="close pull-right">&times;</button>
       <% _.each(items, function(notification){ %>
-        <div class="notification-message">
+        <div class="notification-message" data-id="<%= notification.id %>">
           <span class="fa fa-2x <%= getIcon(notification) %> pull-left"></span>
           <p class="<%= notification.type %>">
             <%= notification.message %>
@@ -38,15 +40,7 @@ class NotificationView extends Marionette.ItemView
   initialize : ->
 
     @collection = new Backbone.Collection()
-
-    @timer = ->
-      setTimeout( =>
-          @trigger("tick", @lastTick)
-          @lastTick = Date.now()
-          @timer()
-        , 100
-      )
-    @timer()
+    @id = 0
 
 
   error : (message) ->
@@ -60,6 +54,7 @@ class NotificationView extends Marionette.ItemView
       notification =
         message : message
         type : type
+        id : @id++
       @collection.add(notification)
 
       @showNotification()
@@ -73,17 +68,26 @@ class NotificationView extends Marionette.ItemView
     # show notifications FIFO
     setTimeout( =>
       @removeNotification()
-    , 3000
+    , @TIMEOUT
     )
 
+
   removeNotification : ->
+
     firstModel = @collection.first()
     @collection.remove(firstModel)
-    @close()
+
+    # only close if there are no more notifications
+    if @collection.length > 0
+      @$("[data-id='#{firstModel.get('id')}']").fadeOut()
+    else
+      @close()
+
 
   close : ->
 
     @$el.removeClass("in")
+
 
   dismissAll : ->
 

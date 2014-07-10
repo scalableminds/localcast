@@ -22,6 +22,9 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
           </a>
         </li>
       <% }) %>
+      <% if (items.length == 0){ %>
+        <li>No casting device found.</li>
+      <% } %>
       </ul>
     </div>
   """)
