@@ -1,5 +1,7 @@
 Backbone = require("Backbone")
 Compatibility = require("../compatibility")
+Notification = require("../views/notification_view")
+
 
 module.exports = class MediaFileModel extends Backbone.Model
 
@@ -31,6 +33,7 @@ module.exports = class MediaFileModel extends Backbone.Model
       @determineMIMEType(file) unless file.type
 
       unless file.type in @MEDIA_WHITELIST
+        Notification.error("#{file.name} is unsupported!")
         return Error("Unsupported Media File")
 
 
@@ -38,7 +41,7 @@ module.exports = class MediaFileModel extends Backbone.Model
 
       @determineMIMEType(file) unless file.type
 
-      switch @get("type").split("/")[0]
+      switch file.type.split("/")[0]
         when "image"
           @set("streamType", "NONE")
           @set("duration", 15000)
@@ -61,7 +64,7 @@ module.exports = class MediaFileModel extends Backbone.Model
 
       # for some reason some media files don't have a MIME type
 
-      fileExtension = file.path.match(/\.([A-Za-z]{3,4})$/)[1]
+      fileExtension = file.path.match(/\.([A-Za-z]{2,4})$/)[1]
 
       MIMEType = switch fileExtension
         when "mkv"

@@ -7,15 +7,15 @@ require('backbone').$ = require("jquery")
 
 class NotificationView extends Marionette.ItemView
 
-  TIMEOUT : 3000
+  TIMEOUT : 5000 #ms
 
   template : _.template("""
     <div>
       <button type="button" class="close pull-right">&times;</button>
       <% _.each(items, function(notification){ %>
-        <div class="notification-message" data-id="<%= notification.id %>">
+        <div class="notification-message <%= notification.type %>" data-id="<%= notification.id %>">
           <span class="fa fa-2x <%= getIcon(notification) %> pull-left"></span>
-          <p class="<%= notification.type %>">
+          <p>
             <%= notification.message %>
           </p>
         </div>
@@ -45,7 +45,7 @@ class NotificationView extends Marionette.ItemView
 
   error : (message) ->
 
-    @show(message, error)
+    @show(message, "error")
 
 
   show : (message, type = "normal") ->
@@ -59,13 +59,14 @@ class NotificationView extends Marionette.ItemView
 
       @showNotification()
 
+    return
+
 
   showNotification : ->
 
     @render()
     @$el.addClass("in")
 
-    # show notifications FIFO
     setTimeout( =>
       @removeNotification()
     , @TIMEOUT
@@ -74,6 +75,7 @@ class NotificationView extends Marionette.ItemView
 
   removeNotification : ->
 
+    # show notifications FIFO
     firstModel = @collection.first()
     @collection.remove(firstModel)
 

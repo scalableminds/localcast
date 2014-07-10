@@ -19,6 +19,9 @@
     & > * {
       display: inline;
     }
+    &.error {
+      -webkit-animation: red-flash 1s ease 0.3s 1; //delay for 0.3 to wait for the translation
+    }
   }
 
   &.slide {
@@ -44,4 +47,16 @@
     right: 0px;
   }
 
+}
+
+@-webkit-keyframes red-flash {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: rgba(255,0,0,0.4);
+  }
+  100% {
+    background-color: white;
+  }
 }

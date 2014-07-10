@@ -2,7 +2,6 @@ _ = require("lodash")
 Marionette = require("backbone.marionette")
 app = require("../app")
 Utils = require("../utils")
-Notification = require("./notification_view")
 
 
 module.exports = class PlayerControlsView extends Marionette.ItemView
@@ -93,7 +92,6 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
   nextTrack : ->
 
     app.vent.trigger("controls:next")
-    Notification.show("next track")
 
 
   previousTrack : ->
