@@ -53,7 +53,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   initialize : ->
 
-    @listenTo(app.vent, "playlist:playTrack", @updatePlayPauseTrack)
+    @listenTo(app.vent, "app:stateChanged", @playPauseTrack)
     @listenTo(app.vent, "chromecast:status", @startProgress)
 
     @timer = ->
@@ -68,25 +68,21 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   playPauseTrack : (arg) ->
 
-    #call was trigger by click on button not by event
+    triggeredByEvent = _.isNumber(arg) # called "app:stateChange" event
 
-    app.isPlaying = !app.isPlaying
-    if app.isPlaying
-      app.vent.trigger("controls:play")
-
-    @updatePlayPauseTrack()
-
-
-  updatePlayPauseTrack : ->
-
-    if app.isPlaying
-      @ui.playButton.find("span").removeClass("fa-play")
-      @ui.playButton.find("span").addClass("fa-pause")
-      app.vent.trigger("controls:continue")
-    else
-      @ui.playButton.find("span").removeClass("fa-pause")
-      @ui.playButton.find("span").addClass("fa-play")
-      app.vent.trigger("controls:pause")
+    switch app.state
+      when app.IDLE
+        @ui.playButton.find("span").addClass("fa-pause")
+        @ui.playButton.find("span").removeClass("fa-play")
+        app.vent.trigger("controls:play")
+      when app.PLAYING
+        @ui.playButton.find("span").addClass("fa-pause")
+        @ui.playButton.find("span").removeClass("fa-play")
+        app.vent.trigger("controls:pause") unless triggeredByEvent
+      when app.PAUSED
+        @ui.playButton.find("span").removeClass("fa-pause")
+        @ui.playButton.find("span").addClass("fa-play")
+        app.vent.trigger("controls:continue") unless triggeredByEvent
 
 
   nextTrack : ->
@@ -114,7 +110,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   showProgress : (lastTick, forceRender) ->
 
-    if (app.isPlaying or forceRender)
+    if (app.state == app.PLAYING or forceRender)
       @currentTime += Date.now() - lastTick #ms
       @ui.currentTimeLabel.text(Utils.msToHumanString(@currentTime))
 

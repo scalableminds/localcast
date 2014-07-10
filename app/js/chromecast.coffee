@@ -29,7 +29,6 @@ module.exports = class Chromecast
       .scan()
       .on("online", (device) =>
         app.vent.trigger("chromecast:device_found", device)
-        #@connect(device)
       )
       .on("offline", (device) ->
         console.log("Removed device", device)
@@ -44,8 +43,8 @@ module.exports = class Chromecast
       return
 
     # in case we were previously casting, stop
-    if app.isCasting or app.isPlaying
-      app.isCasting = app.isPlaying = false
+    if app.isCasting
+      app.isCasting = false
       @stop()
 
     @device = new nodecastor.CastDevice(device)
@@ -72,7 +71,6 @@ module.exports = class Chromecast
             receiver_app.join(@MEDIA_NAMESPACE, @requestSession)
           else
             receiver_app.run(@MEDIA_NAMESPACE, @requestSession)
-            app.isCasting = true
       )
     )
 
@@ -80,10 +78,12 @@ module.exports = class Chromecast
 
     if(!err)
       @session = session
+      app.isCasting = true
 
 
   playMedia : (file) ->
 
+    app.changeState(app.PLAYING)
     mediaInfo =
       contentId : "#{server.getServerUrl()}/chromecast/#{Date.now()}",
       streamType : file.get("streamType"),
@@ -110,6 +110,7 @@ module.exports = class Chromecast
 
   play : ->
 
+    app.changeState(app.PLAYING)
     request =
       type : "PLAY",
 
@@ -118,6 +119,7 @@ module.exports = class Chromecast
 
   pause : ->
 
+    app.changeState(app.PAUSED)
     request =
       type : "PAUSE",
 
@@ -126,6 +128,7 @@ module.exports = class Chromecast
 
   stop : ->
 
+    app.changeState(app.IDLE)
     request =
       type : "STOP",
 

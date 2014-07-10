@@ -58,6 +58,5 @@ module.exports = class PlaylistView extends Marionette.CompositeView
     else
       track = @collection.at(@activeTrack)
 
-    app.isPlaying = true
     app.vent.trigger("playlist:playTrack", track)
 
