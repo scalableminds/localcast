@@ -3,6 +3,7 @@ Backbone = require("backbone")
 _ = require("lodash")
 app = require("./app")
 server = require("./server")
+Notification = require("./views/notification_view")
 
 module.exports = class Chromecast
 
@@ -147,12 +148,14 @@ module.exports = class Chromecast
 
     if (err)
       console.error("Unable to cast:", err.message)
+      Notification.error("Unable to cast:" + err.message)
       @device.stop()
 
     if message
       if message.type == "MEDIA_STATUS"
         status = message.status[0]
         @mediaSessionId = status.mediaSessionId
+        Notification.show("Media Status: " + status.playerState)
 
         app.vent.trigger("chromecast:status", status)
 

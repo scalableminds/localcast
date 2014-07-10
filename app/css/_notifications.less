@@ -1,0 +1,47 @@
+.notification-container {
+  position: relative;
+}
+
+.notifications {
+
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  min-height: 30px;
+
+  margin-bottom: 20px;
+  position: absolute;
+  background-color: white;
+
+
+  .notification-message {
+    padding: 20px 30px 20px 20px;
+
+    & > * {
+      display: inline;
+    }
+  }
+
+  &.slide {
+    top: -70px;
+    -webkit-transition: all 0.3s ease-out;
+
+    &.in{
+      // top: 0px;
+      -webkit-transform: translateY(70px)
+    }
+  }
+
+  p {
+    margin: 0;
+    padding-left: 10px;
+    vertical-align: top;
+  }
+
+  button {
+    margin: 5px 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+}

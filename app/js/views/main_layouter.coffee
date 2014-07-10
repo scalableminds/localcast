@@ -1,17 +1,19 @@
 _ = require("lodash")
-Marionette = require("backbone.marionette")
-Backbone = require("backbone")
-PlaylistView = require("./playlist_view")
-PlayerControlsView = require("./player_controls_view")
-DragDropView = require("./drag_drop_view")
-DeviceSelectionView = require("./device_selection_view")
 app = require("../app")
+Backbone = require("backbone")
+Marionette = require("backbone.marionette")
+PlaylistView = require("./playlist_view")
+DragDropView = require("./drag_drop_view")
+Notifications = require("./notification_view")
+PlayerControlsView = require("./player_controls_view")
+DeviceSelectionView = require("./device_selection_view")
 PlaylistCollection = require("../models/playlist_collection")
 
 
 module.exports = class MainLayouter extends Marionette.Layout
 
   template : _.template("""
+    <section class="notification-container"></section>
     <section class="content-container"></section>
     <section class="modal-container"></section>
     <section class="navbar-bottom"></section>
@@ -23,6 +25,7 @@ module.exports = class MainLayouter extends Marionette.Layout
     "sectionContent" : ".content-container"
     "sectionControls" : ".navbar-bottom"
     "sectionModal" : ".modal-container"
+    "sectionNotifications" : ".notification-container"
 
   events :
     "drop" : "fileDrop"
@@ -30,13 +33,12 @@ module.exports = class MainLayouter extends Marionette.Layout
 
   initialize : ->
 
-    @playerControlsView = new PlayerControlsView()
     @dragDropView = new DragDropView()
+    @playerControlsView = new PlayerControlsView()
+    @deviceSelectionView = new DeviceSelectionView()
 
     @playlistCollection = new PlaylistCollection()
     @playlistView = new PlaylistView(collection : @playlistCollection)
-
-    @deviceSelectionView = new DeviceSelectionView()
 
     @listenTo(@, "render", @showRegions)
 
@@ -48,6 +50,7 @@ module.exports = class MainLayouter extends Marionette.Layout
     @sectionContent.show(@dragDropView)
     @sectionControls.show(@playerControlsView)
     @sectionModal.show(@deviceSelectionView)
+    @sectionNotifications.show(Notifications)
 
 
   fileDrop : (evt) =>

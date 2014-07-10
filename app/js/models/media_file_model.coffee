@@ -1,7 +1,6 @@
 Backbone = require("Backbone")
 Compatibility = require("../compatibility")
 
-
 module.exports = class MediaFileModel extends Backbone.Model
 
     MEDIA_WHITELIST : [
