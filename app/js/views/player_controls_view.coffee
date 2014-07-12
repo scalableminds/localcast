@@ -24,7 +24,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
         <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
         <div class="progress-handle"></div>
       </div>
-      <span class="total-time">05:00</span>
+      <span class="total-time">00:00</span>
     </div>
     <div class="shuffle-cast">
       <!--<span class="fa fa-random fa-lg disabled"></span>-->
@@ -97,7 +97,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   startProgress : (status) ->
 
-    if status.media # only status responses to LOAD contain media info
+    if status.media # only status responses to LOAD command contain media info
       @duration = status.media.duration * 1000 # convert to ms
 
     @currentTime = status.currentTime * 1000
@@ -120,20 +120,22 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
       @ui.progressBar.width(offsetX)
       @ui.progressHandle.css("left", offsetX)
 
-    if (@currentTime >= @duration)
+    if (@currentTime >= @duration and not app.isTranscoding) # transcoding has no duration
       app.vent.trigger("controls:progressEnd")
       @stopListening(@, "tick", @showProgress)
 
 
   seek : (evt) ->
 
-    offsetX = evt.offsetX / @ui.progressContainer.width()
-    @currentTime = offsetX * @duration
+    unless app.isTranscoding
 
-    app.vent.trigger("controls:seek", @currentTime)
+      offsetX = evt.offsetX / @ui.progressContainer.width()
+      @currentTime = offsetX * @duration
 
-    @stopListening(@, "tick", @showProgress) # reset
-    @listenToOnce(@, "tick", (lastTick) -> @showProgress(lastTick, true)) # force rendering once, in case playback is paused
+      app.vent.trigger("controls:seek", @currentTime)
+
+      @stopListening(@, "tick", @showProgress) # reset
+      @listenToOnce(@, "tick", (lastTick) -> @showProgress(lastTick, true)) # force rendering once, in case playback is paused
 
 
   showDevices : ->

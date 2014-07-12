@@ -5,6 +5,7 @@ _ = require("lodash")
 Backbone = require("backbone")
 app = require("./app")
 ffmpeg = require("fluent-ffmpeg")
+Notification = require("./views/notification_view")
 
 
 class Server
@@ -21,14 +22,21 @@ class Server
     @path = null
 
     server = express()
+    server.use((err, req, res, next) ->
+      console.error(err)
+      res.send(500)
+    )
     server.get("/chromecast/:cachebuster", (req, res, next) =>
 
       if @file
 
         if @file.get("isVideoCompatible") and @file.get("isAudioCompatible")
           res.sendfile(@file.get("path"))
+          app.isTranscoding = false
         else
+          Notification.error("You are trying to play back an unsupported file. We will try to live-encode this for you. (EXPERIMENTAL) This is very computational expensive.")
           @transcode(res)
+          app.isTranscoding = true
     )
     server.listen(@PORT)
 
@@ -55,12 +63,12 @@ class Server
       proc.audioCodec("aac")
       proc.audioQuality(100)
 
-    # proc.on('start', (commandLine) ->
-    #   console.log('Spawned Ffmpeg with command: ' + commandLine);
-    # )
-    # .on('error', (err) ->
-    #   console.log('an error happened: ' + err.message)
-    # )
+    proc.on('start', (commandLine) ->
+      console.log('Spawned Ffmpeg with command: ' + commandLine);
+    )
+    .on('error', (err) ->
+      console.log('an error happened: ' + err.message, err)
+    )
 
     proc.pipe(res, end : true)
 

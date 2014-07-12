@@ -15,8 +15,7 @@ module.exports = class PlaylistView extends Marionette.ItemView
       <% } %>
     </td>
     <td><%= Utils.msToHumanString(duration) %></td>
-    <td><i class="fa <% if(isVideoCompatible){ %> fa-check <% } else { %> fa-times <% } %> "</td>
-    <td><i class="fa <% if(isAudioCompatible){ %> fa-check <% } else { %> fa-times <% } %> "</td>
+    <td><i class="fa <% if (!isVideoCompatible || !isAudioCompatible){ %> fa-exclamation-circle <% } %>" title="This file is incompatible with Chromecast. This file needs to be live-encoded. (EXPERIMENTAL)"></td>
   """)
 
   templateHelpers :

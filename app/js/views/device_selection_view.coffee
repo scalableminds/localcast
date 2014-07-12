@@ -52,7 +52,6 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
 
   addDeviceToCollection : (device) ->
 
-    console.log device
     # prevent double entries
     unless @collection.findWhere(friendlyName: device.friendlyName)
       @collection.add(device)

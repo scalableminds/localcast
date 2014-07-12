@@ -11,8 +11,7 @@ module.exports = class PlaylistView extends Marionette.CompositeView
         <tr>
           <th>Title</th>
           <th>Duration</th>
-          <th>Video compatible</th>
-          <th>Audio compatible</th>
+          <th></th>
         </tr>
       </thead>
       <tbody></tbody>
