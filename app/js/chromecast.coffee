@@ -49,6 +49,10 @@ module.exports = class Chromecast
 
     @device = new nodecastor.CastDevice(device)
 
+    @device.on("disconnect", ->
+      console.log arguments
+    )
+
     @device.on("connect", =>
 
       @device.status((err, s) ->
@@ -72,6 +76,7 @@ module.exports = class Chromecast
           else
             receiver_app.run(@MEDIA_NAMESPACE, @requestSession)
       )
+
     )
 
   requestSession : (err, session) =>
@@ -79,6 +84,14 @@ module.exports = class Chromecast
     if(!err)
       @session = session
       app.isCasting = true
+
+
+  disconnect : ->
+
+    if @device
+      @stop()
+      @device.stop()
+      #TODO Maybe launch the Home screen app
 
 
   playMedia : (file) ->
