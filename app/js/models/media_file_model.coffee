@@ -30,7 +30,7 @@ module.exports = class MediaFileModel extends Backbone.Model
 
     validate : (file, options) ->
 
-      type = @determineMIMEType(file) || file.type
+      file.type = @determineMIMEType(file) || file.type
 
       unless file.type in @MEDIA_WHITELIST
         Notification.error("#{file.name} is unsupported!")
@@ -39,9 +39,10 @@ module.exports = class MediaFileModel extends Backbone.Model
 
     initialize : (file) ->
 
-      type = @determineMIMEType(file) || file.type
+      unless @get("type")
+        @determineMIMEType(file)
 
-      switch type.split("/")[0]
+      switch @get("type").split("/")[0]
         when "image"
           @set("streamType", "NONE")
           @set("duration", 15000)
@@ -64,14 +65,15 @@ module.exports = class MediaFileModel extends Backbone.Model
 
       # for some reason some media files don't have a MIME type
 
-      fileExtension = file.path.match(/\.([A-Za-z]{2,4})$/)[1]
+      fileExtension = file.path.match(/\.(.{2,4})$/)[1]
 
       MIMEType = switch fileExtension
         when "mkv"
           "video/mkv"
 
-      @set("type", MIMEType)
-      file.type = MIMEType
+      if MIMEType
+        @set("type", MIMEType)
+      return MIMEType
 
 
 

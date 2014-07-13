@@ -79,7 +79,6 @@ module.exports = class PlaylistView extends Marionette.ItemView
     @parent.activeTrack = @parent.collection.indexOf(@model)
     @model.set("isSelected", true)
 
-    #$(".selected").removeClass("selected") # TODO HACKY
     @render()
 
 
