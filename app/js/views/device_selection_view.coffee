@@ -75,11 +75,17 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
 
   show : ->
 
-    @$el.addClass("in")
+    @$el.show()
+    _.defer( => @$el.addClass("in"))
 
 
   close : ->
 
     @$el.removeClass("in")
+    setTimeout(
+      =>
+        @$el.hide()
+      , 150 # .15s transition
+    )
 
 
