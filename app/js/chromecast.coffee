@@ -96,20 +96,21 @@ module.exports = class Chromecast
 
   playMedia : (file) ->
 
-    app.changeState(app.PLAYING)
-    mediaInfo =
-      contentId : "#{server.getServerUrl()}/chromecast/#{Date.now()}",
-      streamType : file.get("streamType"),
-      contentType : file.get("type")
+    if @device and @session and file
 
-    request =
-      type : "LOAD",
-      media : mediaInfo
+      app.changeState(app.PLAYING)
+      mediaInfo =
+        contentId : "#{server.getServerUrl()}/chromecast/#{Date.now()}",
+        streamType : file.get("streamType"),
+        contentType : file.get("type")
 
-    #the LOAD command's response contains the mediaSessionId
-    @mediaSessionId = null
+      request =
+        type : "LOAD",
+        media : mediaInfo
 
-    @sendCommand(request)
+      #the LOAD command's response contains the mediaSessionId
+      @mediaSessionId = null
+      @sendCommand(request)
 
 
   seek : (time) ->

@@ -68,12 +68,10 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   playPauseTrack : (arg) ->
 
-    triggeredByEvent = _.isNumber(arg) # called "app:stateChange" event
+    triggeredByEvent = _.isNumber(arg) # called by "app:stateChange" event
 
     switch app.state
       when app.IDLE
-        @ui.playButton.find("span").addClass("fa-pause")
-        @ui.playButton.find("span").removeClass("fa-play")
         app.vent.trigger("controls:play")
       when app.PLAYING
         @ui.playButton.find("span").addClass("fa-pause")
@@ -127,7 +125,7 @@ module.exports = class PlayerControlsView extends Marionette.ItemView
 
   seek : (evt) ->
 
-    unless app.isTranscoding
+    unless app.isTranscoding or app.state == app.IDLE
 
       offsetX = evt.offsetX / @ui.progressContainer.width()
       @currentTime = offsetX * @duration
