@@ -107,12 +107,12 @@ module.exports = function (grunt) {
   },
   nodewebkit: {
     options: {
-        version: "0.8.6", // make sure to change ./setup when touching this
-        build_dir: './dist',
-        mac: false, // OS will be set by 'dist' task
-        win: false,
-        linux32: false,
-        linux64: false
+        version: '0.8.6', // make sure to change ./setup when touching this
+        macIcns: '<%= config.app %>/img/icon/osx.icns', //OSX only
+        winIco: '<%= config.app %>/img/icon/windows.ico', //Windows only
+        cacheDir: '<%= config.dist %>/cache',
+        buildDir: '<%= config.dist %>/releases',
+        platforms: [] // OS will be set by 'dist' task
     },
     src: ['<%= config.build %>/**/*']
   },
@@ -123,8 +123,7 @@ module.exports = function (grunt) {
   'clean:dist',
   'build',
   ], function() {
-    grunt.config.set("nodewebkit.options.linux32", true)
-    grunt.config.set("nodewebkit.options.linux64", true)
+    grunt.config.set('nodewebkit.options.platforms', ['linux32', 'linux64'])
     grunt.task.run("nodewebkit")
   });
 
@@ -132,7 +131,7 @@ module.exports = function (grunt) {
   'clean:dist',
   'build',
   ], function() {
-    grunt.config.set("nodewebkit.options.win", true)
+    grunt.config.set("nodewebkit.options.platforms", ['win'])
     grunt.task.run("nodewebkit")
   });
 
@@ -141,7 +140,7 @@ module.exports = function (grunt) {
   'build',
   'shell:patch'
   ], function() {
-    grunt.config.set("nodewebkit.options.mac", true)
+    grunt.config.set("nodewebkit.options.platforms", ['osx'])
     grunt.task.run("nodewebkit")
   }
   );
