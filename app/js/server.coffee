@@ -3,6 +3,7 @@ express = require("express")
 ip = require("ip")
 _ = require("lodash")
 Backbone = require("backbone")
+portscanner = require("portscanner")
 app = require("./app")
 ffmpeg = require("fluent-ffmpeg")
 Notification = require("./views/notification_view")
@@ -10,7 +11,7 @@ Notification = require("./views/notification_view")
 
 class Server
 
-  PORT : 9090
+  port : 9090
 
   constructor : ->
 
@@ -21,29 +22,35 @@ class Server
 
     @path = null
 
-    server = express()
-    server.use((err, req, res, next) ->
-      console.error(err)
-      res.send(500)
+    portscanner.findAPortNotInUse(@port, @port + 1000, '127.0.0.1', (err, port) ->
+
+      @port = port
+
+      server = express()
+      server.use((err, req, res, next) ->
+        console.error(err)
+        res.send(500)
+      )
+      server.get("/chromecast/:cachebuster", (req, res, next) =>
+
+        if @file
+
+          if @file.get("isVideoCompatible") and @file.get("isAudioCompatible")
+            res.sendfile(@file.get("path"))
+            app.isTranscoding = false
+          else
+            Notification.error("You are trying to play back an unsupported file. We will try to live-encode this for you. (EXPERIMENTAL) This is very computational expensive.")
+            @transcode(res)
+            app.isTranscoding = true
+      )
+      server.listen(@port)
+
     )
-    server.get("/chromecast/:cachebuster", (req, res, next) =>
-
-      if @file
-
-        if @file.get("isVideoCompatible") and @file.get("isAudioCompatible")
-          res.sendfile(@file.get("path"))
-          app.isTranscoding = false
-        else
-          Notification.error("You are trying to play back an unsupported file. We will try to live-encode this for you. (EXPERIMENTAL) This is very computational expensive.")
-          @transcode(res)
-          app.isTranscoding = true
-    )
-    server.listen(@PORT)
-
 
   getServerUrl : ->
 
-    "http://#{ip.address()}:#{@PORT}"
+    console.log "http://#{ip.address()}:#{@port}"
+    return "http://#{ip.address()}:#{@port}"
 
 
   transcode : (res) ->

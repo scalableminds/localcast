@@ -48,6 +48,7 @@ module.exports = class DeviceSelectionView extends Marionette.ItemView
 
     @collection.reset()
     app.commands.execute("scanForDevices")
+    @render()
 
 
   addDeviceToCollection : (device) ->

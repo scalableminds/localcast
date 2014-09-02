@@ -1,6 +1,6 @@
 global.document = window.document
-app = require("./js/app")
 gui = require("nw.gui")
+app = require("./js/app")
 MainLayouter = require("./js/views/main_layouter")
 Chromecast = require("./js/chromecast")
 require('backbone').$ = require("jquery")
@@ -17,3 +17,7 @@ win.on("close", ->
   @close(true)
 )
 
+process.on("uncaughtException", (err) ->
+  console.error(err)
+  debugger
+)

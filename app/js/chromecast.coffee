@@ -28,10 +28,17 @@ module.exports = class Chromecast
     nodecastor
       .scan()
       .on("online", (device) =>
+        device.on("error", (err) ->
+          console.error(err)
+          app.vent.trigger("chromecast:device_disconnected", device)
+        )
         app.vent.trigger("chromecast:device_found", device)
       )
       .on("offline", (device) ->
         console.log("Removed device", device)
+      )
+      .on("error", (err) ->
+        console.error(err)
       )
       .start()
 
@@ -62,10 +69,6 @@ module.exports = class Chromecast
 
       @device.on("status", (status) ->
         console.log("Chromecast status updated", status)
-      )
-
-      @device.on("error", (err) ->
-        console.error("An error occurred with some Chromecast device", err)
       )
 
       @device.application(@DEFAULT_MEDIA_RECEIVER, (err, receiver_app) =>
