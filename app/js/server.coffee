@@ -22,7 +22,7 @@ class Server
 
     @path = null
 
-    portscanner.findAPortNotInUse(@port, @port + 1000, '127.0.0.1', (err, port) ->
+    portscanner.findAPortNotInUse(@port, @port + 1000, '127.0.0.1', (err, port) =>
 
       @port = port
 
@@ -57,6 +57,7 @@ class Server
 
     proc = ffmpeg(@file.get("path"))
       .toFormat("matroska")
+      .setFfmpegPath("/Users/therold/Programming/Javascript/localcast/dist/cache/0.8.6/osx/node-webkit.app/Contents/Frameworks/node-webkit Framework.framework/Libraries/ffmpegsumo.so")
 
     if @file.get("isVideoCompatible")
       proc.videoCodec("copy")

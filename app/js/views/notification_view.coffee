@@ -83,7 +83,7 @@ class NotificationView extends Marionette.ItemView
     if @collection.length > 0
       @$("[data-id='#{firstModel.get('id')}']").fadeOut()
     else
-      @close()
+      @dismissAll()
 
 
   close : ->

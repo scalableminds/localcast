@@ -1,4 +1,4 @@
-ffprobe = require ("node-ffprobe")
+ffmpeg = require ("fluent-ffmpeg")
 
 module.exports =
 
@@ -11,7 +11,7 @@ module.exports =
       cb(value)
 
     else
-      ffprobe(filePath, (err, probeData) =>
+      ffmpeg.ffprobe(filePath, (err, probeData) =>
 
         unless err
 

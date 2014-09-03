@@ -18,6 +18,6 @@ win.on("close", ->
 )
 
 process.on("uncaughtException", (err) ->
-  console.error(err)
   debugger
+  console.error(err)
 )
