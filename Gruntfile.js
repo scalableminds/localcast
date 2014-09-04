@@ -124,7 +124,12 @@ module.exports = function (grunt) {
       },
       src: ['<%= config.build %>/**/*']
     },
-    packageNodeWebkit: {
+    copyNodeModules: {
+      options: {
+        dest: '<%= config.build %>'
+      }
+    },
+    deleteNodeModules : {
       options: {
         dest: '<%= config.build %>'
       }
@@ -172,31 +177,29 @@ module.exports = function (grunt) {
   grunt.registerTask("default", ["build", "connect", "watch"])
   grunt.registerTask("build", ["shell:bower", "coffee:compile", "less:sources", "copy:copyAssets"])
 
-  grunt.registerTask("packageNodeWebkit", "Package project as standalone nodewebkit app", function(){
+  grunt.registerTask("copyNodeModules", "", function(){
     var options = this.options();
 
-    // Build coffeescript / less
-    grunt.task.run("clean:dist");
-    grunt.task.run("build");
-
     // Copy node modlues app to compiled JS
-    wrench.mkdirSyncRecursive(path.join(options.dest, 'node_modules'));
+    var b = wrench.mkdirSyncRecursive(path.join(options.dest, 'node_modules'));
 
     var devDependancies = matchdep.filterDev('*');
     var modulesDirectories = fs.readdirSync("node_modules");
     _.difference(modulesDirectories, devDependancies).forEach(
       function(directory) {
-        wrench.copyDirSyncRecursive(path.join('node_modules', directory), path.join(options.dest, 'node_modules', directory));
+        wrench.copyDirSyncRecursive(path.join('node_modules', directory), path.join(options.dest, 'node_modules', directory), {forceDelete: true});
       }
     )
+  });
 
-    // Package app for specified platforms
-    grunt.task.run("nodewebkit");
-
+  grunt.registerTask("deleteNodeModules", "", function(){
     // Remove copy of node_modules directory
     // TODO Wait for the above "nodewebkit" task to finish before deleting the dir
-    //wrench.rmdirSyncRecursive(path.join(options.dest, 'node_modules'));
-
+    var options = this.options();
+    wrench.rmdirSyncRecursive(path.join(options.dest, 'node_modules'));
   });
+
+
+  grunt.registerTask("packageNodeWebkit", ["clean:dist", "build", "copyNodeModules", "nodewebkit", "deleteNodeModules"]);
 
 }
