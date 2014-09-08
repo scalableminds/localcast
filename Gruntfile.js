@@ -181,7 +181,7 @@ module.exports = function (grunt) {
     var options = this.options();
 
     // Copy node modlues app to compiled JS
-    var b = wrench.mkdirSyncRecursive(path.join(options.dest, 'node_modules'));
+    wrench.mkdirSyncRecursive(path.join(options.dest, 'node_modules'));
 
     var devDependancies = matchdep.filterDev('*');
     var modulesDirectories = fs.readdirSync("node_modules");
