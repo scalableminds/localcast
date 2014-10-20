@@ -1,4 +1,5 @@
 Backbone = require("Backbone")
+app = require("../app")
 Compatibility = require("../compatibility")
 Notification = require("../views/notification_view")
 
@@ -53,12 +54,25 @@ module.exports = class MediaFileModel extends Backbone.Model
 
         when "audio"
           @set("streamType", "BUFFERED")
-          @checkCompatibility()
+
 
 
     checkCompatibility : ->
 
-      Compatibility.probe(@, @set.bind(@))
+      # Check if a video is Chromecast compatible
+
+      # use FFmpeg if available
+      if app.hasFFmpegSupport
+        Compatibility.probe(@, @set.bind(@))
+
+      else
+
+        switch @get("type").split("/")[1]
+          when "webm"
+            return #probably compatible
+          when "mkv", "avi", "mp4"
+            return
+
 
 
     determineMIMEType : (file) ->

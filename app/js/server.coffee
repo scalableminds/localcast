@@ -39,9 +39,14 @@ class Server
             res.sendfile(@file.get("path"))
             app.isTranscoding = false
           else
-            Notification.error("You are trying to play back an unsupported file. We will try to live-encode this for you. (EXPERIMENTAL) This is very computational expensive.")
-            @transcode(res)
-            app.isTranscoding = true
+            if app.hasFFmpegSupport
+              Notification.error("You are trying to play back an unsupported file. We will try to live-encode this for you. (EXPERIMENTAL) This is very computational expensive.")
+              @transcode(res)
+              app.isTranscoding = true
+            else
+              Notification.error("Your file format may be unsupported by the Chromecast. Check our website for workarounds. We will try to play it anyway.")
+              app.isTranscoding = false
+              res.sendfile(@file.get("path"))
       )
       server.listen(@port)
 
@@ -56,8 +61,7 @@ class Server
   transcode : (res) ->
 
     proc = ffmpeg(@file.get("path"))
-      .toFormat("matroska")
-      .setFfmpegPath("/Users/therold/Programming/Javascript/localcast/dist/cache/0.8.6/osx/node-webkit.app/Contents/Frameworks/node-webkit Framework.framework/Libraries/ffmpegsumo.so")
+      .toFormat("Matroska")
 
     if @file.get("isVideoCompatible")
       proc.videoCodec("copy")

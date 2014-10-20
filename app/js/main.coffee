@@ -3,7 +3,13 @@ gui = require("nw.gui")
 app = require("./js/app")
 MainLayouter = require("./js/views/main_layouter")
 Chromecast = require("./js/chromecast")
+ffmpeg = require("fluent-ffmpeg")
 require('backbone').$ = require("jquery")
+
+ffmpeg.getAvailableCodecs( (err, codecs) ->
+  unless err #"Cannot find ffmpeg"
+    app.hasFFmpegSupport = true
+)
 
 chromecast = new Chromecast()
 mainLayouter = new MainLayouter()

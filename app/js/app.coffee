@@ -11,6 +11,7 @@ app.BUFFERING = 3
 app.state = app.IDLE
 app.isCasting = false
 app.isTranscoding = false
+app.hasFFmpegSupport = false
 
 app.changeState = (state) ->
   app.state = state
