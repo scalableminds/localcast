@@ -35,6 +35,7 @@ header h2 {
 }
 
 .btn {
+  background-color: transparent;
   border:0.2em solid #fff;
   text-transform:uppercase;
   padding:0.6em 1em;
@@ -52,10 +53,10 @@ header h2 {
   color:#5e5d9d;
 }
 
-.white-text .btn:disabled,
-.black-text .btn:disabled, {
+.btn:disabled {
   pointer-events: none;
   cursor: not-allowed;
+  color: darkgray;
 }
 
 .black-text .btn:hover {
@@ -123,6 +124,7 @@ iframe {
 .white-text h1,
 .white-text h2,
 .white-text h3,
+.white-text button,
 .white-text p {
   color: #fff;
 }
@@ -131,6 +133,7 @@ iframe {
 .black-text h1,
 .black-text h2,
 .black-text h3,
+.black-text button,
 .black-text p {
   color: #000;
   border-color: #000;
@@ -185,6 +188,10 @@ footer > div {
 #box hr {
   clear:both;
   border-color:transparent;
+}
+
+#box h3 {
+  margin-bottom: 20px;
 }
 
 #download {

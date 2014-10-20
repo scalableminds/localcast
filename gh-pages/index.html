@@ -6,16 +6,7 @@
 
   <link type="text/css" href="style/main.css" rel="stylesheet" media="all"></link>
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="http://incorporated.sendtoinc.com/incorporated.jpg">
-  <meta name="title" content="Jekyll Incorporated - Modern Blog for Companies">
-  <link rel="publisher" href="https://plus.google.com/101183822199340201470/">
-  <link rel="canonical" href="http://incorporated.sendtoinc.com/">
-
-  <meta property="og:title" content="Localcast">
-  <meta property="og:description" content="Stream media to your Chromecast from your desktop computer">
-  <meta property="og:url" content="https://github.com/scalableminds/localcast">
-  <meta property="og:site_name" content="Localcast">
-
+  <meta name="title" content="Localcast - Stream media to your Chromecast from your desktop computer">
 </head>
 
 <body >
@@ -52,30 +43,27 @@
     <p class="sub-heading">Easy streaming for videos, music and pictures to your big screen.</p>
     <div>
       <h3>Easy Casting</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea magnam optio error ex nemo explicabo sit totam ipsum eaque, tenetur asperiores illo ullam unde quaerat amet quae laboriosam aspernatur quidem?</p>
+      <p>A simple and sleek app that will simply stream your local video, music amd pictures to the big screen. Your Chromecast will be detected automatically and otherwise incompatible videos will be automcatically converted for you.</p>
     </div>
     <div>
       <h3>Simple and Intuitve Interface</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit deleniti, ratione eius, sed praesentium beatae veniam nobis adipisci nihil. Illo nobis a dolorum hic ab officiis dolores eos reprehenderit repudiandae.</p>
+      <p>Simply drag and drop your media files on the app and you are good to go.
+      </p>
     </div>
     <div>
       <h3>Platform Independent</h3>
-      <p class="sub-heading">Works great on your Mac, Windows or Linux PC</p>
+      <p class="sub-heading">Works great on your Mac, Windows (soon) or Linux PC (soon)</p>
     </div>
 
     <hr>
 
     <div>
       <h3>Open Source</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti debitis fuga commodi laboriosam sit autem dolore, libero culpa, quibusdam odio ex omnis repellat illo molestiae, vero deserunt architecto atque dolorum.</p>
+      <p>Feel free to help with the development. All the code is hosted on Github and is publicly accessible. <a href="https://github.com/scalableminds/localcast">Localcast is open source software</a></p>
     </div>
     <div>
       <h3>Support for Many Media Formats</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea placeat excepturi accusamus, eum! Magnam ullam, ipsa tenetur natus, in vitae aliquid quis rem eos excepturi ea temporibus aspernatur possimus!</p>
-    </div>
-    <div>
-      <h3>Live Encoding for Unsupported Media Files</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis deleniti laudantium cumque aperiam maxime, incidunt explicabo eligendi earum tenetur placeat, praesentium sunt eos. Dignissimos quos suscipit sequi sed dolorum illum!</p>
+      <p>The Chromecast already supports a wide array of media formats. But every now and then you run it more exotic ones like MKV that don't play nice with it. Localcast can solve this issue for you. Make sure you have FFmpeg libary installed on your computer and it will automatically transcode your video and audio on the fly.</p>
     </div>
     <hr>
   </section>
@@ -84,9 +72,9 @@
     <a name="download"></a>
     <h2>Download</h2>
     <div>
-      <a href="" class="btn"><i class=""></i>Windows</a>
-      <a href="" class="btn"><i class=""></i>OSX</a>
-      <a href="" class="btn" disabled><i class=""></i>Linux</a>
+      <button href="#" class="btn disabled" disabled><i class=""></i>Windows</button>
+      <button href="#" class="btn"><i class=""></i>OSX</button>
+      <button href="#" class="btn disabled" disabled><i class=""></i>Linux</button>
     </div>
     <div>
       <p class="notice">
@@ -100,19 +88,55 @@
     <h2>Frequently Asked Questions</h2>
     <div>
       <h3>#1 Which formats are supported?</h3>
-      <p>Lorem</p>
+      <p>If have FFmpeg installed on your computer Localcast supports just about any modern media format. Out of the box the Chromecast only supports the following formats:</p>
+      <p>Image formats</p>
+        <ul>
+          <li>BMP</li>
+          <li>GIF</li>
+          <li>JPEG</li>
+          <li>PNG</li>
+          <li>WEBP</li>
+        </ul>
+
+        <p>Streaming protocols</p>
+        <ul>
+          <li>MP4</li>
+          <li>WebM</li>
+        </ul>
+
+        <p>Adaptive bitrate streaming protocols</p>
+        <ul>
+          <li>MPEG-DASH
+            <ul>
+              <li>PlayReady</li>
+              <li>Widevine</li>
+            </ul>
+          </li>
+          <li>SmoothStreaming
+            <ul>
+              <li>PlayReady</li>
+            </ul>
+          </li>
+          <li>HTTP Live Streaming (HLS)
+            <ul>
+              <li>AES-128 encryption
+            </li></ul>
+          </li>
+        </ul>
+      </p>
     </div>
     <div>
       <h3>#2 What is FFmpeg?</h3>
-      <p>Lorem</p>
+      <p>FFmpeg is a complete, cross-platform and free solution to record, convert and stream audio and video. It provides over 100 audio and video codecs to process almost any media file. <a href="http://ffmpeg.org/"> Get it here for free.</a></p>
+      <p>Localcast can utilize FFmpeg to automatically transcode video and audio files that we would be incompatible with the Chromecast otherwise.</p>
     </div>
     <div>
       <h3>#3 Why is it not available for Linux?</h3>
-      <p>Lorem</p>
+      <p>Sorry, we just didn't have the time yet. However, our technology stack should be cross plattform compatible and you are encouraged to checkout the source code and compile it yourself.</p>
     </div>
     <div>
-      <h3>#4</h3>
-      <p>Lorem</p>
+      <h3>#4 Why is it not available for Windows?</h3>
+      <p>We have had some early success stories with Windows, but aren't quite there just yet. Please stay tuned for a Windows releas soon.</p>
     </div>
   </section>
 
