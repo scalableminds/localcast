@@ -4,5 +4,6 @@ resources/node-webkit
 build
 bower_components
 dist
+.grunt
 
 npm-debug.log

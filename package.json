@@ -37,7 +37,8 @@
     "grunt-contrib-less": "~0.11.0",
     "grunt-node-webkit-builder": "~0.2.2",
     "grunt-shell": "~0.7.0",
-    "wrench": "~1.5.8"
+    "wrench": "~1.5.8",
+    "grunt-gh-pages": "~0.9.1"
   },
   "engines": {
     "node": ">=0.8.0"

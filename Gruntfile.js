@@ -16,7 +16,8 @@ module.exports = function (grunt) {
   var config = {
     app: 'app',
     build: 'build',
-    dist: 'dist'
+    dist: 'dist',
+    ghPages: 'gh-pages'
   };
 
   grunt.initConfig({
@@ -129,10 +130,16 @@ module.exports = function (grunt) {
         dest: '<%= config.build %>'
       }
     },
-    deleteNodeModules : {
+    deleteNodeModules: {
       options: {
         dest: '<%= config.build %>'
       }
+    },
+    "gh-pages": {
+      options: {
+        base: '<%= config.ghPages %>'
+      },
+      src: ['**']
     }
   });
 
@@ -194,7 +201,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask("deleteNodeModules", "", function(){
     // Remove copy of node_modules directory
-    // TODO Wait for the above "nodewebkit" task to finish before deleting the dir
     var options = this.options();
     wrench.rmdirSyncRecursive(path.join(options.dest, 'node_modules'));
   });
