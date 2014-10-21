@@ -1,0 +1,175 @@
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Localcast - Simple stream for Chromecast</title>
+
+  <link type="text/css" href="style/main.css" rel="stylesheet" media="all"></link>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="title" content="Localcast - Stream media to your Chromecast from your desktop computer">
+</head>
+
+<body >
+  <header class="white-text">
+    <a href="http://scalableminds.com" class="logo" target="_blank"><img src="img/logo.png" width="42"></a>
+    <h1>Localcast </h1>
+    <h2>Stream video to your Chromecast from your desktop computer</h2>
+    <a href="#download" class="btn">Download</a>
+    <a href="https://github.com/scalableminds/localcast" class="btn">View on Github</a>
+
+    <ul class="social-buttons">
+      <li>
+        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=scalableminds&amp;repo=localcast&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"></iframe>
+      </li>
+      <li>
+        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=scalableminds&amp;repo=localcast&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
+      </li>
+    </ul>
+  </header>
+
+  <section class="black-text">
+    <h2>Simple and beautiful</h2>
+    <p>
+      <img src="img/screenshot.jpg">
+    </p>
+    <p>
+      <a class="btn" href="#download">Try it yourself!</a>
+    </p>
+  </section>
+  <hr>
+
+  <section id="box">
+    <h2>What's in the box?</h2>
+    <p class="sub-heading">Easy streaming for videos, music and pictures to your big screen.</p>
+    <div>
+      <h3>Easy Casting</h3>
+      <p>A simple and sleek app that will simply stream your local video, music amd pictures to the big screen. Your Chromecast will be detected automatically and otherwise incompatible videos will be automcatically converted for you.</p>
+    </div>
+    <div>
+      <h3>Simple and Intuitve Interface</h3>
+      <p>Simply drag and drop your media files on the app and you are good to go.
+      </p>
+    </div>
+    <div>
+      <h3>Platform Independent</h3>
+      <p class="sub-heading">Works great on your Mac, Windows (soon) or Linux PC (soon)</p>
+    </div>
+
+    <hr>
+
+    <div>
+      <h3>Open Source</h3>
+      <p>Feel free to help with the development. All the code is hosted on Github and is publicly accessible. <a href="https://github.com/scalableminds/localcast">Localcast is open source software</a></p>
+    </div>
+    <div>
+      <h3>Support for Many Media Formats</h3>
+      <p>The Chromecast already supports a wide array of media formats. But every now and then you run it more exotic ones like MKV that don't play nice with it. Localcast can solve this issue for you. Make sure you have FFmpeg libary installed on your computer and it will automatically transcode your video and audio on the fly.</p>
+    </div>
+    <hr>
+  </section>
+
+  <section id="download" class="white-text">
+    <a name="download"></a>
+    <h2>Download</h2>
+    <div>
+      <button href="#" class="btn disabled" disabled><i class=""></i>Windows</button>
+      <button href="#" class="btn"><i class=""></i>OSX</button>
+      <button href="#" class="btn disabled" disabled><i class=""></i>Linux</button>
+    </div>
+    <div>
+      <p class="notice">
+        For live-encoding to work properly you have to install FFmpeg on your system. <a href="https://www.ffmpeg.org/download.html" target="_blank">Get it here.</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="faq" class="black-text">
+    <a name="faq"></a>
+    <h2>Frequently Asked Questions</h2>
+    <div>
+      <h3>#1 Which formats are supported?</h3>
+      <p>If have FFmpeg installed on your computer Localcast supports just about any modern media format. Out of the box the Chromecast only supports the following formats:</p>
+      <p>Image formats</p>
+        <ul>
+          <li>BMP</li>
+          <li>GIF</li>
+          <li>JPEG</li>
+          <li>PNG</li>
+          <li>WEBP</li>
+        </ul>
+
+        <p>Streaming protocols</p>
+        <ul>
+          <li>MP4</li>
+          <li>WebM</li>
+        </ul>
+
+        <p>Adaptive bitrate streaming protocols</p>
+        <ul>
+          <li>MPEG-DASH
+            <ul>
+              <li>PlayReady</li>
+              <li>Widevine</li>
+            </ul>
+          </li>
+          <li>SmoothStreaming
+            <ul>
+              <li>PlayReady</li>
+            </ul>
+          </li>
+          <li>HTTP Live Streaming (HLS)
+            <ul>
+              <li>AES-128 encryption
+            </li></ul>
+          </li>
+        </ul>
+      </p>
+    </div>
+    <div>
+      <h3>#2 What is FFmpeg?</h3>
+      <p>FFmpeg is a complete, cross-platform and free solution to record, convert and stream audio and video. It provides over 100 audio and video codecs to process almost any media file. <a href="http://ffmpeg.org/"> Get it here for free.</a></p>
+      <p>Localcast can utilize FFmpeg to automatically transcode video and audio files that we would be incompatible with the Chromecast otherwise.</p>
+    </div>
+    <div>
+      <h3>#3 Why is it not available for Linux?</h3>
+      <p>Sorry, we just didn't have the time yet. However, our technology stack should be cross plattform compatible and you are encouraged to checkout the source code and compile it yourself.</p>
+    </div>
+    <div>
+      <h3>#4 Why is it not available for Windows?</h3>
+      <p>We have had some early success stories with Windows, but aren't quite there just yet. Please stay tuned for a Windows releas soon.</p>
+    </div>
+  </section>
+
+  <footer class="white-text">
+    <h2>Enjoy easy casting from your desktop computer.</h2>
+    <p>Designed and built by <a href="https://scalableminds.com">scalable minds</a></p>
+    <p>
+      <a href="#download" class="btn">Download</a>
+      <a href="https://github.com/scalableminds/localcast" class="btn">View on Github</a>
+    </p><hr>
+    <div>
+      <a href="http://scalableminds.com"><img src="img/scalableminds.png" width="120"></a>
+      <a href="http://scm.io/legal">Impressum</a>
+      <a href="#">Terms</a>
+      <a href="http://scm.io/privacy">Privacy</a>
+      <a href="https://blog.scm.io/">Blog</a>
+      <a href="mailto:hello@scm.io">Contact Us</a>
+    </div>
+  </footer>
+
+  <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+  <script type="text/javascript">
+
+    // var _gaq = _gaq || [];
+    // _gaq.push(['_setAccount', 'UA-41213665-4']);
+    // _gaq.push(['_trackPageview']);
+
+    // (function() {
+    // var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    // ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    // var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    // })();
+
+  </script>
+
+</body></html>
