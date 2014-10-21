@@ -15,7 +15,7 @@ npm install
 ```
 In order to find a Chromecast on the network this project relies on a module called mdns2, which needs to be natively compiled on every platform. For more information on how to do this and the required tools look [here](https://github.com/rogerwang/node-webkit/wiki/Build-native-modules-with-nw-gyp) or [here](https://github.com/TooTallNate/node-gyp). Use the setup ```./setup``` script or follow the manual instruction below:
 
-##### 1. Compile Native Module
+##### 1. Compile Native mdns2 Module
 
 ```bash
 cd node_modules/nodecastor/node_modules/mdns2
@@ -41,7 +41,8 @@ nodewebkit ./build
 
 ## System Requirements
 
-FFmpeg must be installed on your system. (Live recoding of incompatible video files.)
+- FFmpeg should be installed on your system for live transcoding of incompatible video files.
+- mDNS is implemented in Bonjour (OSX) and the nss-mdns service (Linux). Under Windows you may need the Bonjour SDK for Windows from Apple.
 
 ## Distribution
 
@@ -54,6 +55,9 @@ grunt dist-{win, max, linux}
 *Notice:* 
 Due to the requirment to natively compile a node module you can only build standalones for your current platform. 
 
+## License
+
+TBD
 
 
 
