@@ -60,8 +60,8 @@ class Server
 
   transcode : (res) ->
 
-    proc = ffmpeg(@file.get("path"))
-      .toFormat("Matroska")
+    proc = new ffmpeg(@file.get("path"))
+    proc.toFormat("matroska")
 
     if @file.get("isVideoCompatible")
       proc.videoCodec("copy")

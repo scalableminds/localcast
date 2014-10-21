@@ -168,7 +168,7 @@ module.exports = class Chromecast
 
     if (err)
       console.error("Unable to cast:", err.message)
-      Notification.error("Unable to cast:" + err.message)
+      #Notification.error("Unable to cast:" + err.message)
       @device.stop()
 
     if message

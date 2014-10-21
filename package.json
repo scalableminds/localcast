@@ -22,7 +22,7 @@
     "jquery": "~2.1.0",
     "nodecastor": "~0.1.4",
     "ip": "~0.3.0",
-    "fluent-ffmpeg": "~2.0.0-rc1",
+    "fluent-ffmpeg": "2.0.0-rc1",
     "portscanner": "~1.0.0"
   },
   "devDependencies": {
